@@ -1,13 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<<<<<<< HEAD
 <qualifiedTypeNameHistroy/>
-=======
-<qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.net.Socket"/>
-<fullyQualifiedTypeName name="java.net.ServerSocket"/>
-<fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="com.cp372.server.models.Point"/>
-<fullyQualifiedTypeName name="com.cp372.server.exceptions.InvalidVerticesException"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
-</qualifiedTypeNameHistroy>
->>>>>>> origin/master

@@ -1,0 +1,23 @@
+package com.cp372.server;
+
+import com.cp372.server.models.Shape;
+
+/**
+ * Responsible for reading the shapes from storage and responding to various
+ * different queries. This provides an abstraction layer over top of the direct storage.
+ * 
+ * @author Vaughan Hilts
+ * 
+ */
+public class ShapeReader {
+
+	
+	public ShapeReader() {
+		
+	}
+	
+	public Shape processQuery(String query, String... params) {
+
+	}
+	
+}

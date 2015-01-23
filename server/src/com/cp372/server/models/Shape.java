@@ -43,7 +43,7 @@ public abstract class Shape {
 				
 				if(tupleA.x < tupleB.x)
 					return 1;
-				else if(tupleB.x < tupleB.x)
+				else if(tupleB.x < tupleA.x)
 					return -1;
 				
 				// It must be a tie if we're here...

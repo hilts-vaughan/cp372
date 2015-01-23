@@ -18,18 +18,30 @@ public final class Server {
 		ServerSocket socket = new ServerSocket(port);
 
 		System.out.println("Preparing to launch the web server...");
-		
+				
 		// Try 4 points
 		List<Point> points = new ArrayList<Point>();
+		List<Point> points2 = new ArrayList<Point>();
 		
-		points.add(new Point(1, 0));
-		points.add(new Point(0, 1));
-		points.add(new Point(1, 1));		
-		points.add(new Point(0, 0));
+		points.add(new Point(52, 7));
+		points.add(new Point(34, 6));
+		points.add(new Point(2, 1));		
+		points.add(new Point(3, 4));
+
+		points2.add(new Point(52, 7));
+		points2.add(new Point(2, 1));
+		points2.add(new Point(34, 6));
+		points2.add(new Point(3, 4));					
+				
 		
-		
-		Shape s = ShapeFactory.createShape(points);
+		//Shape s = ShapeFactory.createShape(points);
 		s.printPoints();
+		
+		System.out.println("\n\n Clear....");
+		
+		Shape f = ShapeFactory.createShape(points2);
+		f.printPoints();
+		
 		
 		// Process HTTP service requests in an infinite loop.
 		while (true) {

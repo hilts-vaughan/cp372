@@ -1,0 +1,12 @@
+package com.cp372.server.models;
+
+public abstract class Shape {
+	
+	// A list of vertices mapped in memory
+	protected Point[] _vertices;
+	
+	protected Shape(List<Point> vertices) {
+		// Implement stuff here
+	}
+	
+}

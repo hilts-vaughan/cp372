@@ -1,0 +1,7 @@
+package com.cp372.server.models;
+
+public interface Shape {
+
+	void sample();
+	
+}

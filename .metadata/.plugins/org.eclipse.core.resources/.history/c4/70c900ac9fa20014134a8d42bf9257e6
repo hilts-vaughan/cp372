@@ -1,0 +1,5 @@
+package com.cp372.server.models;
+
+public class Triangle {
+
+}

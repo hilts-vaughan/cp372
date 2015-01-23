@@ -1,9 +1,0 @@
-package com.cp372.server;
-
-public class ShapeFactory {
-
-	public static createShape(List<Point> points) {
-		
-	}
-	
-}

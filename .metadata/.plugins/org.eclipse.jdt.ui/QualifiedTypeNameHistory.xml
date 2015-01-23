@@ -1,16 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.net.Socket"/>
-<fullyQualifiedTypeName name="java.net.ServerSocket"/>
-<fullyQualifiedTypeName name="com.cp372.server.exceptions.InvalidVerticesException"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="com.cp372.server.exceptions.IllegalRequestException"/>
-<fullyQualifiedTypeName name="com.cp372.server.models.Triangle"/>
-<fullyQualifiedTypeName name="com.cp372.server.Tuple"/>
-<fullyQualifiedTypeName name="java.util.Collections"/>
-<fullyQualifiedTypeName name="java.util.Comparator"/>
-<fullyQualifiedTypeName name="com.cp372.server.models.Point"/>
-<fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="com.cp372.server.models.Shape"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
-</qualifiedTypeNameHistroy>
+<qualifiedTypeNameHistroy/>

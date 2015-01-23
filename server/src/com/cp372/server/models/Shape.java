@@ -40,7 +40,20 @@ public abstract class Shape {
 
 		Comparator<Tuple> comparator = new Comparator<Tuple>() {
 			public int compare(Tuple tupleA, Tuple tupleB) {
-				return tupleA.x.compareTo(tupleB.x);
+				
+				if(tupleA.x < tupleB.x)
+					return 1;
+				else if(tupleB.x < tupleB.x)
+					return -1;
+				
+				// It must be a tie if we're here...
+				if(tupleA.y.getX() < tupleB.y.getX())
+					return 1;
+				else
+					return -1;
+				
+
+				
 			}
 		};
 

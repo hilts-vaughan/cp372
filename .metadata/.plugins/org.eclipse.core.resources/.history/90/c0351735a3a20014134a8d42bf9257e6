@@ -1,5 +1,0 @@
-package com.cp372.server.exceptions;
-
-public class InvalidVerticesException extends Exception {
-
-}

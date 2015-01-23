@@ -5,10 +5,10 @@ import java.util.List;
 public abstract class Shape {
 	
 	// A list of vertices mapped in memory
-	protected List<Point> _vertices;
+	protected Point[] _vertices;
 	
 	public Shape(List<Point> vertices) {
-		_vertices = vertices;
+		// Implement stuff here
 	}
 	
 }

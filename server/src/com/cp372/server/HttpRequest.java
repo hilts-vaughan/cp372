@@ -4,8 +4,12 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+import com.cp372.server.exceptions.IllegalRequestException;
+import com.cp372.server.models.Shape;
+
 final class HttpRequest implements Runnable {
 	final static String CRLF = "\r\n";
+	final static ShapeReader _shapeReader = new ShapeReader();
 	Socket socket;
 
 	// Constructor
@@ -23,6 +27,7 @@ final class HttpRequest implements Runnable {
 	}
 
 	private void processRequest() throws Exception {
+
 		// Get a reference to the socket's input and output streams.
 		InputStream is = socket.getInputStream();
 		DataOutputStream os = new DataOutputStream(socket.getOutputStream());
@@ -30,68 +35,51 @@ final class HttpRequest implements Runnable {
 		// Set up input stream filters.
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
-		// Get the request line of the HTTP request message.
-		String requestLine = br.readLine();
-
-		// Extract the filename from the request line.
-		StringTokenizer tokens = new StringTokenizer(requestLine);
-		tokens.nextToken(); // skip over the method, which should be "GET"
-		String fileName = tokens.nextToken();
-
-		// Prepend a "." so that file request is within the current directory.
-		fileName = "." + fileName;
-
-		// Open the requested file.
-		FileInputStream fis = null;
-		boolean fileExists = true;
-		try {
-			fis = new FileInputStream(fileName);
-		} catch (FileNotFoundException e) {
-			fileExists = false;
-		}
-
-		// Debug info for private use
-		System.out.println("Incoming!!!");
-		System.out.println(requestLine);
-		String headerLine = null;
-		while ((headerLine = br.readLine()).length() != 0) {
-			System.out.println(headerLine);
-		}
-
-		// Construct the response message.
-		String statusLine = null;
-		String contentTypeLine = null;
-		String entityBody = null;
-		if (fileExists) {
-			statusLine = "HTTP/1.0 200 OK" + CRLF;
-			contentTypeLine = "Content-Type: " + contentType(fileName) + CRLF;
-		} else {
-			statusLine = "HTTP/1.0 404 Not Found" + CRLF;
-			contentTypeLine = "Content-Type: text/html" + CRLF;
-			entityBody = "<HTML>" + "<HEAD><TITLE>Not Found</TITLE></HEAD>"
-					+ "<BODY>Not Found</BODY></HTML>";
-		}
-		// Send the status line.
-		os.writeBytes(statusLine);
-
-		// Send the content type line.
-		os.writeBytes(contentTypeLine);
-
-		// Send a blank line to indicate the end of the header lines.
-		os.writeBytes(CRLF);
-
-		// Send the entity body.
-		if (fileExists) {
-			sendBytes(fis, os);
-			fis.close();
-		} else {
-			os.writeBytes(entityBody);
+		String requestLine = null;
+		while ((requestLine = br.readLine()).length() != 0) {
+			System.out.println("Client Request: " + requestLine);
+			
+			// Get some shape responses via the the parser
+			Iterable<Shape> shapes = parseRequest(requestLine);
+			
 		}
 
 		// Close streams and socket.
 		os.close();
 		br.close();
 		socket.close();
+	}
+
+	private Iterable<Shape> parseRequest(String requestLine) throws Exception {
+
+		StringTokenizer tokenizer = new StringTokenizer(requestLine);
+		List<String> tokens = new ArrayList<String>();
+
+		while (tokenizer.hasMoreTokens()) {
+			tokens.add(tokenizer.nextToken());
+		}
+
+		if (tokens.size() > 1) {
+			String method = tokens.get(0);
+			if (method.equals("GET")) {
+				// Pass in the parameters
+				try {
+					return _shapeReader.processQuery(tokens.get(1),
+							tokens.subList(2, tokens.size() - 1));
+				} catch (Exception e) {
+					throw e;
+				}
+			} else if (method.equals("POST")) {
+				// Return some dummy data
+				return new ArrayList<Shape>();
+			} else {
+				throw new IllegalRequestException(requestLine);
+			}
+		}
+		else {
+			throw new Exception("Not enough arguments provided.");
+		}
+		
 	}
 
 	private static void sendBytes(FileInputStream fis, OutputStream os)

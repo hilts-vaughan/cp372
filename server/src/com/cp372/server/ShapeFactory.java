@@ -12,8 +12,7 @@ public class ShapeFactory {
 	 * @param points
 	 * @throws InvalidVerticesException 
 	 */
-	public static Shape createShape(List<Point> points) throws InvalidVerticesException {
-		
+	public static Shape createShape(List<Point> points) throws InvalidVerticesException {		
 		if(points.size() == 3) {
 			return new Triangle(points);
 		}
@@ -22,7 +21,8 @@ public class ShapeFactory {
 		}
 		else {
 			throw new InvalidVerticesException(points);
-		}		
+		}
+		
 	}
 	
 }

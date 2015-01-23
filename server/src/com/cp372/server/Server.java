@@ -28,5 +28,8 @@ public final class Server {
 			// Start the thread.
 			thread.start();
 		}
+		
+		// close socket if we ever manage to leave the loop
+		// socket.close();
 	}
 }

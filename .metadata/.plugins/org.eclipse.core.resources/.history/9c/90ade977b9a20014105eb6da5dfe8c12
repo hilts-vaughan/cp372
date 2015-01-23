@@ -28,7 +28,7 @@ public final class Server {
 		points.add(new Point(1, 1));
 		
 		Shape s = ShapeFactory.createShape(points);
-		s.printPoints();
+		
 		
 		// Process HTTP service requests in an infinite loop.
 		while (true) {

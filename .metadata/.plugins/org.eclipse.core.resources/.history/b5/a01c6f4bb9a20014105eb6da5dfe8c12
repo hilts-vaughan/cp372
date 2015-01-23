@@ -3,11 +3,9 @@ package com.cp372.server;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.cp372.server.models.Point;
-import com.cp372.server.models.Shape;
 
 public final class Server {
 	public static void main(String argv[]) throws Exception {
@@ -25,10 +23,9 @@ public final class Server {
 		points.add(new Point(0, 0));
 		points.add(new Point(1, 0));
 		points.add(new Point(0, 1));
-		points.add(new Point(1, 1));
+		points.add(new point(1, 1));
 		
-		Shape s = ShapeFactory.createShape(points);
-		s.printPoints();
+		
 		
 		// Process HTTP service requests in an infinite loop.
 		while (true) {

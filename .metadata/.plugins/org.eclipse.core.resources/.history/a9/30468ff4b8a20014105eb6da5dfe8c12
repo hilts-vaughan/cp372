@@ -14,15 +14,10 @@ public abstract class Shape {
 
 	public Shape(List<Point> vertices) {
 
-		// We should sort out list of points before actually doing anything with them
-		List<Point> sorted = getSortedClockwiseVertices(vertices);
-		_vertices = sorted;
-	}
-	
-	public void printPoints() {
-		for(Point vertex : _vertices) {
-			System.out.println(vertex.toString());
-		}
+		// We should sort out list of points before actually doing anything with
+		// these
+
+		// _vertices = vertices;
 	}
 
 	private List<Point> getSortedClockwiseVertices(List<Point> vertices) {

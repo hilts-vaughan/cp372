@@ -18,12 +18,6 @@ public abstract class Shape {
 		List<Point> sorted = getSortedClockwiseVertices(vertices);
 		_vertices = sorted;
 	}
-	
-	public void printPoints() {
-		for(Point vertex : _vertices) {
-			System.out.println(vertex.toString());
-		}
-	}
 
 	private List<Point> getSortedClockwiseVertices(List<Point> vertices) {
 

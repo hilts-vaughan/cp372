@@ -14,15 +14,10 @@ public abstract class Shape {
 
 	public Shape(List<Point> vertices) {
 
-		// We should sort out list of points before actually doing anything with them
-		List<Point> sorted = getSortedClockwiseVertices(vertices);
-		_vertices = sorted;
-	}
-	
-	public void printPoints() {
-		for(Point vertex : _vertices) {
-			System.out.println(vertex.toString());
-		}
+		// We should sort out list of points before actually doing anything with
+		// these
+
+		// _vertices = vertices;
 	}
 
 	private List<Point> getSortedClockwiseVertices(List<Point> vertices) {
@@ -35,12 +30,12 @@ public abstract class Shape {
 			double angle = Math.atan2(vertex.getY() - center.getY(),
 					vertex.getX() - center.getX());
 
-			weights.add(new Tuple(angle, vertex));
+			weights.add(new Tuple<Double, Point>(angle, vertex));
 		}
 
 		Comparator<Tuple> comparator = new Comparator<Tuple>() {
 			public int compare(Tuple tupleA, Tuple tupleB) {
-				return tupleA.x.compareTo(tupleB.x);
+				return tupleA.x.compareTo(tupleB.x());
 			}
 		};
 

@@ -20,7 +20,7 @@ public abstract class Shape {
 	}
 	
 	public void printPoints() {
-		for(Point vertex : _vertices) {
+		for(Point vertex : vertices) {
 			System.out.println(vertex.toString());
 		}
 	}

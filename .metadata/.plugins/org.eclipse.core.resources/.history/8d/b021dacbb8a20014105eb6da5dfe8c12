@@ -14,45 +14,37 @@ public abstract class Shape {
 
 	public Shape(List<Point> vertices) {
 
-		// We should sort out list of points before actually doing anything with them
-		List<Point> sorted = getSortedClockwiseVertices(vertices);
-		_vertices = sorted;
-	}
-	
-	public void printPoints() {
-		for(Point vertex : _vertices) {
-			System.out.println(vertex.toString());
-		}
+		// We should sort out list of points before actually doing anything with
+		// these
+
+		// _vertices = vertices;
 	}
 
 	private List<Point> getSortedClockwiseVertices(List<Point> vertices) {
-
-		Point center = getCentroidPoint(vertices);
-		List<Tuple> weights = new ArrayList<Tuple>();
-
-		for (int i = 0; i < vertices.size(); i++) {
-			Point vertex = vertices.get(i);
-			double angle = Math.atan2(vertex.getY() - center.getY(),
-					vertex.getX() - center.getX());
-
-			weights.add(new Tuple(angle, vertex));
-		}
-
-		Comparator<Tuple> comparator = new Comparator<Tuple>() {
-			public int compare(Tuple tupleA, Tuple tupleB) {
-				return tupleA.x.compareTo(tupleB.x);
-			}
-		};
-
-		// Sort the points going into a standard order
-		Collections.sort(weights, comparator);
-
-		List<Point> sortedVertices = new ArrayList<Point>();	
-		for(int i = 0; i < weights.size(); i++) {
-			sortedVertices.add(weights.get(i).y);
-		}
 		
-		return sortedVertices;
+		Point center = getCentroidPoint(vertices);
+		List<Tuple<Double, Point>> weights = new ArrayList<Tuple<Double, Point>>();
+		
+
+		for(int i = 0; i < vertices.size(); i++) {
+			Point vertex = vertices.get(i);
+			double angle = Math.atan2(vertex.getY() - center.getY(), vertex.getX() - center.getX());
+			
+			weights.add(new Tuple<Double, Point>(angle, vertex));
+		}
+
+	    Comparator<Tuple> comparator = new Comparator<Tuple>()
+	    	    {
+	    	        public int compare(Tuple tupleA,
+	    	                Tuple tupleB)
+	    	        {
+	    	            return tupleA.x.compareTo(tupleB.x());
+	    	        }
+	    	    };
+
+		
+		Collections.sort(weights, comparator);
+		
 	}
 
 	/**

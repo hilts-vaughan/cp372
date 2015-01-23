@@ -23,9 +23,10 @@ public final class Server {
 		List<Point> points = new ArrayList<Point>();
 		
 		points.add(new Point(1, 0));
-		points.add(new Point(0, 0));
 		points.add(new Point(0, 1));
-		points.add(new Point(1, 1));
+		points.add(new Point(1, 1));		
+		points.add(new Point(0, 0));
+		
 		
 		Shape s = ShapeFactory.createShape(points);
 		s.printPoints();

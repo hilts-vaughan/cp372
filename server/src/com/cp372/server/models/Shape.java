@@ -47,7 +47,7 @@ public abstract class Shape {
 					return -1;
 				
 				// It must be a tie if we're here...
-				if(tupleA.y.getX() < tupleB.y.getX())
+				if(tupleA.y.getX() > tupleB.y.getX())
 					return 1;
 				else
 					return -1;
@@ -80,8 +80,8 @@ public abstract class Shape {
 	 */
 	private Point getCentroidPoint(Iterable<Point> vertices) {
 
-		int x = 0;
-		int y = 0;
+		double x = 0;
+		double y = 0;
 		int k = 0;
 
 		for (Point p : vertices) {

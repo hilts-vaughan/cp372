@@ -25,9 +25,9 @@ public class ShapeReader {
 	private TypeFilter _typeFilter = new TypeFilter();
 	private PointFilter _pointFilter = new PointFilter();
 
-	public final static String HEADER_OCCURENCES = "OCCURENCES";
-	public final static String HEADER_POINT = "POINTS";
-	public final static String HEADER_TYPE = "TYPE";
+	private final static String HEADER_OCCURENCES = "OCCURENCES";
+	private final static String HEADER_POINT = "POINTS";
+	private final static String HEADER_TYPE = "TYPE";
 
 	public ShapeReader() {
 

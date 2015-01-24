@@ -15,8 +15,8 @@ import com.cp372.server.models.Triangle;
  */
 public class PolygonFilter implements ShapeFilter {
 
-	private final static String SHAPE_TYPE_TRIANGLE = "TRIANGLE";
-	private final static String SHAPE_TYPE_QUAD = "QUAD";
+	private final static String SHAPE_TYPE_TRIANGLE = "T";
+	private final static String SHAPE_TYPE_QUAD = "Q";
 
 	@Override
 	public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes,
@@ -40,7 +40,7 @@ public class PolygonFilter implements ShapeFilter {
 			}
 		}
 
-		return shapes;
+		return results;
 	}
 
 }

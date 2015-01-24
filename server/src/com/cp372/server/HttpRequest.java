@@ -4,10 +4,10 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import com.cp372.server.exceptions.IllegalRequestException;
@@ -25,10 +25,13 @@ final class HttpRequest implements Runnable {
 
 	// Implement the run() method of the Runnable interface.
 	public void run() {
-		try {
-			processRequest();
-		} catch (Exception e) {
-			System.out.println(e);
+		while (true) {
+
+			try {
+				processRequest();
+			} catch (Exception e) {
+				//System.out.println(e);
+			}
 		}
 	}
 
@@ -40,13 +43,27 @@ final class HttpRequest implements Runnable {
 
 		// Set up input stream filters.
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		boolean stop = false;
+		
+		while (!stop) {
 
-		String requestLine = null;
-		while ((requestLine = br.readLine()).length() != 0) {
-			System.out.println("Client Request: " + requestLine);
+			String requestLine = null;
 
-			// Get some shape responses via the the parser
-			Iterable<Shape> shapes = parseRequest(requestLine);
+			while ((requestLine = br.readLine()).length() != 0) {
+				System.out.println("Client Request: " + requestLine);
+
+				// Get some shape responses via the the parser
+				Iterable<Shape> shapes = parseRequest(requestLine);
+
+				System.out.println(shapes);
+
+				if (requestLine.equals("STOP")) {
+					stop = true;
+					break;
+				}
+
+			}
+
 		}
 
 		// Close streams and socket.
@@ -58,7 +75,7 @@ final class HttpRequest implements Runnable {
 	private Iterable<Shape> parseRequest(String requestLine) throws Exception {
 
 		// Split into lines for reading, as the HTTP request should be
-		String lines[] = requestLine.split("\\r?\\n");
+		String lines[] = requestLine.split("\\t");
 
 		// If we have at least two lines in it
 		if (lines.length > 0) {
@@ -81,14 +98,15 @@ final class HttpRequest implements Runnable {
 
 				// Split the data into the keys if possible
 				if (data.length > 1) {
-					parameters
-							.put(data[0].toUpperCase(), data[1].toUpperCase());
+					parameters.put(data[0].toUpperCase().trim(), data[1]
+							.toUpperCase().trim());
 				}
 			}
 
 			if (verb.equals("GET")) {
 				try {
 					// Return the stuff we need
+					return _shapeReader.processQuery(aux, parameters);
 				} catch (Exception e) {
 					throw e;
 				}
@@ -98,11 +116,9 @@ final class HttpRequest implements Runnable {
 				throw new IllegalRequestException(requestLine);
 			}
 
-			return null;
+		} // end if
 
-		} else {
-			return null;
-		}
+		return null;
 
 		//
 		// List<String> tokens = new ArrayList<String>();

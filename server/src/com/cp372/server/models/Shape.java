@@ -65,6 +65,15 @@ public abstract class Shape {
 		return sortedVertices;
 	}
 
+	
+	public String toString(){
+		String stuff = "";
+		for(Point vertex : _vertices) {
+			stuff+=vertex;
+		}
+		
+		return stuff;
+	}
 	/**
 	 * Computes the centroid of a set of vertices given in the parameters set.
 	 * This centroid implementation has a small bias drift

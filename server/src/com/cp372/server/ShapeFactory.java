@@ -1,9 +1,14 @@
 package com.cp372.server;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import com.cp372.server.exceptions.InvalidVerticesException;
-import com.cp372.server.models.*;
+import com.cp372.server.models.Point;
+import com.cp372.server.models.Quadrilateral;
+import com.cp372.server.models.Shape;
+import com.cp372.server.models.Triangle;
 	
 public class ShapeFactory {
 
@@ -13,6 +18,10 @@ public class ShapeFactory {
 	 * @throws InvalidVerticesException 
 	 */
 	public static Shape createShape(List<Point> points) throws InvalidVerticesException {		
+		
+		// Remove duplicates silently before putting into the factory
+		points = getPointsWithDuplicatesRemoved(points);
+		
 		if(points.size() == 3) {
 			return new Triangle(points);
 		}
@@ -21,8 +30,16 @@ public class ShapeFactory {
 		}
 		else {
 			throw new InvalidVerticesException(points);
-		}
-		
+		}		
+	}
+	
+	/**
+	 * Using a set, converts all 
+	 * @param points
+	 * @return
+	 */
+	private static List<Point> getPointsWithDuplicatesRemoved(List<Point> points) {
+			return new ArrayList<Point>(new HashSet<Point>(points));
 	}
 	
 }

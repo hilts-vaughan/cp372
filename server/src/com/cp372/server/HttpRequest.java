@@ -1,8 +1,14 @@
 package com.cp372.server;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.StringTokenizer;
 
 import com.cp372.server.exceptions.IllegalRequestException;
 import com.cp372.server.models.Shape;
@@ -41,7 +47,6 @@ final class HttpRequest implements Runnable {
 
 			// Get some shape responses via the the parser
 			Iterable<Shape> shapes = parseRequest(requestLine);
-
 		}
 
 		// Close streams and socket.
@@ -52,35 +57,79 @@ final class HttpRequest implements Runnable {
 
 	private Iterable<Shape> parseRequest(String requestLine) throws Exception {
 
-		StringTokenizer tokenizer = new StringTokenizer(requestLine);
-		List<String> tokens = new ArrayList<String>();
+		// Split into lines for reading, as the HTTP request should be
+		String lines[] = requestLine.split("\\r?\\n");
 
-		while (tokenizer.hasMoreTokens()) {
-			tokens.add(tokenizer.nextToken());
-		}
+		// If we have at least two lines in it
+		if (lines.length > 0) {
 
-		if (tokens.size() > 1) {
-			String method = tokens.get(0);
-			if (method.equals("GET")) {
-				// Pass in the parameters
+			String methodLine = lines[0];
+			StringTokenizer tokenizer = new StringTokenizer(methodLine);
+			String verb = tokenizer.nextToken().toUpperCase();
+			String aux = "";
+
+			if (tokenizer.hasMoreTokens()) {
+				aux = tokenizer.nextToken().toUpperCase();
+			}
+
+			// Grab the parameter block
+			HashMap<String, String> parameters = new HashMap<String, String>();
+
+			for (int i = 1; i < lines.length; i++) {
+
+				String[] data = lines[i].split(":");
+
+				// Split the data into the keys if possible
+				if (data.length > 1) {
+					parameters
+							.put(data[0].toUpperCase(), data[1].toUpperCase());
+				}
+			}
+
+			if (verb.equals("GET")) {
 				try {
-					return _shapeReader.processQuery(tokens.get(1),
-							tokens.subList(2, tokens.size() - 1));
+					// Return the stuff we need
 				} catch (Exception e) {
 					throw e;
 				}
-			} else if (method.equals("POST")) {
-				// Return some dummy data
+			} else if (verb.equals("POST")) {
 				return new ArrayList<Shape>();
 			} else {
 				throw new IllegalRequestException(requestLine);
 			}
+
+			return null;
+
 		} else {
-			throw new Exception("Not enough arguments provided.");
+			return null;
 		}
 
+		//
+		// List<String> tokens = new ArrayList<String>();
+		//
+		// while (tokenizer.hasMoreTokens()) {
+		// tokens.add(tokenizer.nextToken());
+		// }
+		//
+		// if (tokens.size() > 1) {
+		// String method = tokens.get(0);
+		// if (method.equals("GET")) {
+		// // Pass in the parameters
+		// try {
+		// return _shapeReader.processQuery(tokens.get(1),
+		// tokens.subList(2, tokens.size() - 1));
+		// } catch (Exception e) {
+		// throw e;
+		// }
+		// } else if (method.equals("POST")) {
+		// // Return some dummy data
+		// return new ArrayList<Shape>();
+		// } else {
+		// throw new IllegalRequestException(requestLine);
+		// }
+		// } else {
+		// throw new Exception("Not enough arguments provided.");
+		// }
+
 	}
-
-
-
 }

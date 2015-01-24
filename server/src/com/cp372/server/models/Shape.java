@@ -50,10 +50,7 @@ public abstract class Shape {
 				if(tupleA.y.getX() > tupleB.y.getX())
 					return 1;
 				else
-					return -1;
-				
-
-				
+					return -1;								
 			}
 		};
 

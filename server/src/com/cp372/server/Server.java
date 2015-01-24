@@ -34,8 +34,16 @@ public final class Server {
 		points2.add(new Point(3, 4));					
 				
 		
-		//Shape s = ShapeFactory.createShape(points);
+		Shape s = ShapeFactory.createShape(points);
 		s.printPoints();
+		
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
+		Iterable<Shape> shapes = ShapeStorage.getInstance().getShapeByOccurence(s, 2);
+
+		for(Shape x : shapes) {
+			System.out.println(x);
+		}
 		
 		System.out.println("\n\n Clear....");
 		

@@ -38,10 +38,10 @@ final class HttpRequest implements Runnable {
 		String requestLine = null;
 		while ((requestLine = br.readLine()).length() != 0) {
 			System.out.println("Client Request: " + requestLine);
-			
+
 			// Get some shape responses via the the parser
 			Iterable<Shape> shapes = parseRequest(requestLine);
-			
+
 		}
 
 		// Close streams and socket.
@@ -75,32 +75,12 @@ final class HttpRequest implements Runnable {
 			} else {
 				throw new IllegalRequestException(requestLine);
 			}
-		}
-		else {
+		} else {
 			throw new Exception("Not enough arguments provided.");
 		}
-		
+
 	}
 
-	private static void sendBytes(FileInputStream fis, OutputStream os)
-			throws Exception {
-		// Construct a 1K buffer to hold bytes on their way to the socket.
-		byte[] buffer = new byte[1024];
-		int bytes = 0;
 
-		// Copy requested file into the socket's output stream.
-		while ((bytes = fis.read(buffer)) != -1) {
-			os.write(buffer, 0, bytes);
-		}
-	}
 
-	private static String contentType(String fileName) {
-		if (fileName.endsWith(".htm") || fileName.endsWith(".html")) {
-			return "text/html";
-		}
-		if (fileName.endsWith(".ram") || fileName.endsWith(".ra")) {
-			return "audio/x-pn-realaudio";
-		}
-		return "application/octet-stream";
-	}
 }

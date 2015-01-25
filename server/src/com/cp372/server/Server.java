@@ -52,7 +52,6 @@ public final class Server {
 		points.add(new Point(2, 2));		
 		points.add(new Point(1, 1));
 		
-		points.add(new Point(1, 1));
 		s = ShapeFactory.createShape(points);
 		s.printPoints();
 		ShapeStorage.getInstance().insertOrUpdateShape(s);

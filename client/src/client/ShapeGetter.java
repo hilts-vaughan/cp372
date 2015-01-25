@@ -137,7 +137,6 @@ public class ShapeGetter {
 						e.printStackTrace();
 					}
 				
-				System.out.println("hey a button get");
 			} 
 			
 		}

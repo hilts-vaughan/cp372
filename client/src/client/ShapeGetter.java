@@ -14,15 +14,24 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener; 
 import java.awt.event.ActionEvent;  
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 public class ShapeGetter {  
 	//Note: Typically the main method will be in a 
 	//separate class. As this is a simple one class 
 	//example it's all in the one class. 
+	
+	Socket shapeConnectionSocket=null;
+	DataOutputStream os = null;
+    DataInputStream is = null;
 	public static void main(String[] args) 
 	{  
 		new ShapeGetter(); 
 	}  
 	public ShapeGetter() { 
+		
 		JFrame guiFrame = new JFrame();  
 		//make sure the program exits when the frame closes 
 		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -32,13 +41,13 @@ public class ShapeGetter {
 		JPanel grid = new JPanel(new FlowLayout());
 		
 	    //guiFrame.add(grid);
-		JLabel ipLbl = new JLabel("IP:"); 
+		JLabel ipLbl = new JLabel("Host:"); 
 		JLabel portLbl = new JLabel("Port:"); 
 
 		
-		JTextField ipText = new JTextField(20);
-		JTextField portText = new JTextField(4);
-		JTextField shapeText = new JTextField(20);
+		final JTextField ipText = new JTextField(20);
+		final JTextField portText = new JTextField(4);
+		final JTextField shapeText = new JTextField(20);
 		
 		JButton connect = new JButton("Connect");
 		JButton getBut = new JButton( "Get");
@@ -70,13 +79,24 @@ public class ShapeGetter {
 		
 		guiFrame.add(displayList);
 		guiFrame.setVisible(true); 
-		connect.addActionListener(new ActionListener() 
+
+		
+		connect.addActionListener(new ActionListener()		
 		{ 
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
+			    try {
+			    	shapeConnectionSocket = new Socket(ipText.getText(), Integer.parseInt(portText.getText()));
+		            os = new DataOutputStream(shapeConnectionSocket.getOutputStream());
+		            is = new DataInputStream(shapeConnectionSocket.getInputStream());   
+			    }
+			    catch (IOException e) {
+			        System.out.println(e);
+			    }
 			
-				} 
-			}
+			} 
+			
+		}
 		);
 		
 		
@@ -84,9 +104,15 @@ public class ShapeGetter {
 		{ 
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
+				try {
+					os.writeChars("GET");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
 			
-				} 
-			}
+		}
 		);
 		sendBut.addActionListener(new ActionListener() 
 		{ 

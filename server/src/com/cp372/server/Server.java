@@ -35,7 +35,45 @@ public final class Server {
 		
 		Shape s = ShapeFactory.createShape(points);
 		s.printPoints();
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
+
+		points.clear();
+		points.add(new Point(1, 2));
+		points.add(new Point(2, 3));
+		points.add(new Point(3, 2));		
+		points.add(new Point(1, 1));
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
+
+		points.clear();
+		points.add(new Point(4, 2));
+		points.add(new Point(2, 3));
+		points.add(new Point(2, 2));		
+		points.add(new Point(1, 1));
 		
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
+
+		points.clear();
+		points.add(new Point(6, 2));
+		points.add(new Point(2, 3));
+		points.add(new Point(3, 3));		
+		points.add(new Point(1, 2));
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
+
+		points.clear();
+		points.add(new Point(2, 2));
+		points.add(new Point(2, 3));
+		points.add(new Point(9, 2));		
+		points.add(new Point(1, 1));
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
+
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
 		Iterable<Shape> shapes = ShapeStorage.getInstance().getShapeByOccurence(s, 2);

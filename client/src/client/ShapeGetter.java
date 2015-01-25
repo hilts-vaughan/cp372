@@ -23,9 +23,17 @@ public class ShapeGetter {
 	//separate class. As this is a simple one class 
 	//example it's all in the one class. 
 	
-	Socket shapeConnectionSocket=null;
-	DataOutputStream os = null;
-    DataInputStream is = null;
+    HttpRequest connection;
+    final JTextField getText = new JTextField(20);
+	final JTextField ipText = new JTextField(20);
+	final JTextField portText = new JTextField(4);
+	final JTextField shapeText = new JTextField(20);
+	
+	JButton connect = new JButton("Connect");
+	JButton getBut = new JButton( "Get");
+	JButton sendBut = new JButton("Send");
+	
+	
 	public static void main(String[] args) 
 	{  
 		new ShapeGetter(); 
@@ -47,14 +55,7 @@ public class ShapeGetter {
 		JLabel ipLbl = new JLabel("Host:"); 
 		JLabel portLbl = new JLabel("Port:"); 
 
-		final JTextField getText = new JTextField(20);
-		final JTextField ipText = new JTextField(20);
-		final JTextField portText = new JTextField(4);
-		final JTextField shapeText = new JTextField(20);
 		
-		JButton connect = new JButton("Connect");
-		JButton getBut = new JButton( "Get");
-		JButton sendBut = new JButton("Send");
 
 		JList displayList = new JList();
 		
@@ -97,7 +98,7 @@ public class ShapeGetter {
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
 			    
-			
+			connection.openConnection(ipText, portText);
 			} 
 			
 		}
@@ -108,12 +109,9 @@ public class ShapeGetter {
 		{ 
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
-				try {
-					os.writeChars("GET");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
+				connection.writing(getText);
+				
 			} 
 			
 		}
@@ -122,12 +120,7 @@ public class ShapeGetter {
 		{ 
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
-				//When the fruit of veg button is pressed 
-				//the setVisible value of the listPanel and 
-				//comboPanel is switched from true to  
-				//value or vice versa. 
-		//		listPanel.setVisible(!listPanel.isVisible()); 
-		//		comboPanel.setVisible(!comboPanel.isVisible()); 
+				connection.posting(getText);
 				} 
 			}
 		);

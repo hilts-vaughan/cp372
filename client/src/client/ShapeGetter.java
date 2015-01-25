@@ -18,12 +18,20 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 public class ShapeGetter {  
 	//Note: Typically the main method will be in a 
 	//separate class. As this is a simple one class 
 	//example it's all in the one class. 
 	
-    HttpRequest connection;
+   
+    
+    static Socket shapeConnectionSocket = null;
+	static DataOutputStream os = null;
+	static DataInputStream is = null;
+	
+	
+	
     final JTextField getText = new JTextField(20);
 	final JTextField ipText = new JTextField(20);
 	final JTextField portText = new JTextField(4);
@@ -98,7 +106,18 @@ public class ShapeGetter {
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
 			    
-			connection.openConnection(ipText, portText);
+			try {
+				openConnection(ipText, portText);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			} 
 			
 		}
@@ -110,7 +129,13 @@ public class ShapeGetter {
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
 				
-				connection.writing(getText);
+				
+					try {
+						os.writeChars("GET Q \r\n");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				
 			} 
 			
@@ -120,7 +145,7 @@ public class ShapeGetter {
 		{ 
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
-				connection.posting(getText);
+				System.out.println("hey a button get");
 				} 
 			}
 		);
@@ -130,7 +155,14 @@ public class ShapeGetter {
 		
 		
 	}
-	
+	void openConnection(JTextField ipText, JTextField portText) throws NumberFormatException, UnknownHostException, IOException {
+		System.out.println("hey a button");  
+		System.out.println(ipText.getText());
+		System.out.println(Integer.parseInt(portText.getText()));
+		shapeConnectionSocket = new Socket(ipText.getText(), Integer.parseInt(portText.getText()));
+		os = new DataOutputStream(shapeConnectionSocket.getOutputStream());
+		is = new DataInputStream(shapeConnectionSocket.getInputStream());  
+	}
 	
 	  
 	}

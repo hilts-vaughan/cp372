@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 public class ShapeGetter {  
@@ -27,7 +28,7 @@ public class ShapeGetter {
    
     
     static Socket shapeConnectionSocket = null;
-	static DataOutputStream os = null;
+	static PrintStream os = null;
 	static DataInputStream is = null;
 	
 	
@@ -130,12 +131,7 @@ public class ShapeGetter {
 			{ 
 				
 				
-					try {
-						os.writeChars("GET Q \r\n");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					os.print("GET "+ getText.getText() +" \r\n");
 				
 			} 
 			
@@ -145,8 +141,7 @@ public class ShapeGetter {
 		{ 
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
-				System.out.println("hey a button get");
-				} 
+				os.print("POST "+ shapeText.getText() +" \r\n");				} 
 			}
 		);
 		
@@ -156,11 +151,10 @@ public class ShapeGetter {
 		
 	}
 	void openConnection(JTextField ipText, JTextField portText) throws NumberFormatException, UnknownHostException, IOException {
-		System.out.println("hey a button");  
 		System.out.println(ipText.getText());
 		System.out.println(Integer.parseInt(portText.getText()));
 		shapeConnectionSocket = new Socket(ipText.getText(), Integer.parseInt(portText.getText()));
-		os = new DataOutputStream(shapeConnectionSocket.getOutputStream());
+		os = new PrintStream(shapeConnectionSocket.getOutputStream());
 		is = new DataInputStream(shapeConnectionSocket.getInputStream());  
 	}
 	

@@ -52,7 +52,7 @@ public class ShapeStorage {
 	 * 
 	 * @param shape
 	 */
-	public void insertOrUpdateShape(Shape shape) {
+	public synchronized void insertOrUpdateShape(Shape shape) {
 
 		for (ShapeEntry entry : _shapes) {
 			if (entry.getShape().equals(shape)) {

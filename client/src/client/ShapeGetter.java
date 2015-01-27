@@ -10,6 +10,7 @@ import javax.swing.JList;
 import javax.swing.JTextField;
 
 import java.awt.BorderLayout; 
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener; 
@@ -66,7 +67,7 @@ public class ShapeGetter {
 
 		
 
-		JList displayList = new JList();
+		final JList displayList = new JList();
 		
 		guiFrame.setLayout(new GridLayout(0,1));
 		
@@ -134,6 +135,7 @@ public class ShapeGetter {
 					os.print("GET "+ getText.getText() +ENDLINE);
 					try {
 						String response = is.readUTF();
+						System.out.println(response);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -149,6 +151,7 @@ public class ShapeGetter {
 				os.print("POST "+ shapeText.getText() +ENDLINE);	
 				try {
 					String response = is.readUTF();
+					System.out.println(response);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

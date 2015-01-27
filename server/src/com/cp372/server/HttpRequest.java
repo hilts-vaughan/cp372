@@ -57,6 +57,7 @@ final class HttpRequest implements Runnable {
 
 				System.out.println(shapes);
 
+				os.writeUTF("ok");
 				if (requestLine.equals("STOP")) {
 					stop = true;
 					break;
@@ -106,7 +107,9 @@ final class HttpRequest implements Runnable {
 			if (verb.equals("GET")) {
 				try {
 					// Return the stuff we need
+
 					return _shapeReader.processQuery(aux, parameters);
+					
 				} catch (Exception e) {
 					throw e;
 				}

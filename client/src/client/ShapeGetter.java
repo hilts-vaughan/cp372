@@ -31,7 +31,7 @@ public class ShapeGetter {
 	static PrintStream os = null;
 	static DataInputStream is = null;
 	
-	
+	final String ENDLINE = "\r\n";
 	
     final JTextField getText = new JTextField(20);
 	final JTextField ipText = new JTextField(20);
@@ -131,8 +131,13 @@ public class ShapeGetter {
 			{ 
 				
 				
-					os.print("GET "+ getText.getText() +" \r\n");
-				
+					os.print("GET "+ getText.getText() +ENDLINE);
+					try {
+						String response = is.readUTF();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			} 
 			
 		}
@@ -141,9 +146,19 @@ public class ShapeGetter {
 		{ 
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
-				os.print("POST "+ shapeText.getText() +" \r\n");				} 
+				os.print("POST "+ shapeText.getText() +ENDLINE);	
+				try {
+					String response = is.readUTF();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			
+			} 
 			}
 		);
+		
 		
 				
 		

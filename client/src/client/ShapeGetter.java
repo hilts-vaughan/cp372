@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel; 
 import javax.swing.JList; 
 import javax.swing.JTextField;
+import javax.swing.SwingWorker;
 
 import java.awt.BorderLayout; 
 import java.awt.Component;
@@ -21,6 +22,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
 public class ShapeGetter {  
 	//Note: Typically the main method will be in a 
 	//separate class. As this is a simple one class 
@@ -38,7 +41,7 @@ public class ShapeGetter {
 	final JTextField ipText = new JTextField(20);
 	final JTextField portText = new JTextField(4);
 	final JTextField shapeText = new JTextField(20);
-	
+	final JList<String> displayList = new JList();
 	JButton connect = new JButton("Connect");
 	JButton getBut = new JButton( "Get");
 	JButton sendBut = new JButton("Send");
@@ -67,7 +70,6 @@ public class ShapeGetter {
 
 		
 
-		final JList displayList = new JList();
 		
 		guiFrame.setLayout(new GridLayout(0,1));
 		
@@ -133,13 +135,7 @@ public class ShapeGetter {
 				
 				
 					os.print("GET "+ getText.getText() +ENDLINE);
-					try {
-						String response = is.readUTF();
-						System.out.println(response);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					workerGet.execute();
 			} 
 			
 		}
@@ -149,14 +145,7 @@ public class ShapeGetter {
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
 				os.print("POST "+ shapeText.getText() +ENDLINE);	
-				try {
-					String response = is.readUTF();
-					System.out.println(response);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+				workerSend.execute();				
 			
 			} 
 			}
@@ -176,7 +165,42 @@ public class ShapeGetter {
 		is = new DataInputStream(shapeConnectionSocket.getInputStream());  
 	}
 	
-	  
+	SwingWorker<Void, Void> workerGet = new SwingWorker<Void, Void>() {
+		
+		@Override
+		protected Void doInBackground() throws Exception {
+			String response = is.readUTF();
+			System.out.println(response);
+			String[] parts = response.split("&");
+			if(parts.length>0 && parts[0].contains("200 ok"))
+			{
+				parts[0]= (String) parts[0].subSequence(7, parts[0].length());
+			//	ArrayList<Object> shapesArray = new ArrayList<Object>();
+			  	//for(int i=0; i<parts.length; i++){
+			//		shapesArray.add(parts[i]);
+			//	}
+			//	shapesArray.add("ok");
+				
+			//	displayList.setListData((String[]) shapesArray.toArray());
+				parts[0]="WORK";
+				displayList.setListData(parts);
+			
+			}
+			return null;
+				}
+		};
+		 
+		SwingWorker<Void, Void> workerSend = new SwingWorker<Void, Void>() {
+			
+			@Override
+			protected Void doInBackground() throws Exception {
+				String response = is.readUTF();
+				System.out.println(response);
+				return null;
+					}
+			};
+			 
+	
 	}
 
 

@@ -72,7 +72,15 @@ public class Triangle extends Shape {
 			this.addProperty(TriangleProperty.RIGHT);
 		}
 			
+		// Test for acute
+		if(intAngleA < 90 && intAngleB < 90 && intAngleC < 90) {
+			this.addProperty(TriangleProperty.ACUTE);
+		}
 
+		// Test for obtuse
+		if(intAngleA > 90 || intAngleB > 90 || intAngleC > 90) {
+			this.addProperty(TriangleProperty.OBTUSE);
+		}
 		
 		
 	}

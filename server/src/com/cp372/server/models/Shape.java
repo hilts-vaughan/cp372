@@ -65,6 +65,14 @@ public abstract class Shape {
 		return sortedVertices;
 	}
 
+	/**
+	 * Returns true if the shape is convex, false otherwise.
+	 */
+	public boolean isConvex() {
+		
+		//TODO: Actually implement this...
+		return false;
+	}
 	
 	public String toString(){
 		String stuff = "";

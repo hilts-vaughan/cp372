@@ -67,9 +67,9 @@ public final class Server {
 
 		
 		points.clear();
-		points.add(new Point(0, 4));
+		points.add(new Point(0, 5));
 		points.add(new Point(0, 0));
-		points.add(new Point(4, 0));		
+		points.add(new Point(4, 1));		
 		s = ShapeFactory.createShape(points);
 		s.printPoints();
 	

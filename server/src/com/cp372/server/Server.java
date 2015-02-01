@@ -19,7 +19,9 @@ public final class Server {
 		System.out.println("Preparing to launch the web server...");
 				
 		// Try 4 points
+		
 		List<Point> points = new ArrayList<Point>();
+		
 		List<Point> points2 = new ArrayList<Point>();
 		
 		points.add(new Point(52, 7));
@@ -88,6 +90,12 @@ public final class Server {
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
 		Iterable<Shape> shapes = ShapeStorage.getInstance().getShapeByOccurence(s, 2);
 
+		points.clear();
+		points.add(new Point(0, 0));
+		points.add(new Point(0, 3));
+		points.add(new Point(2, 5));		
+		points.add(new Point(4, 5));
+		s = ShapeFactory.createShape(points);
 		
 		
 		

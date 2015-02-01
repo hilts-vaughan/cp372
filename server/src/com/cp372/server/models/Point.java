@@ -35,5 +35,22 @@ public class Point {
 	public String toString() {
 		return ("(" + x + "," + y + ")");
 	}
+	
+	/**
+	 * Computes the distance between this point and another point.
+	 * @param point	The other point to compare to
+	 * @return	The distance between the two points
+	 */
+	public double distanceFrom(Point point) {
+		
+		double a = (this.getX() - point.getX());
+		a = Math.pow(a, 2);
+		
+		double b = (this.getY() - point.getY());
+		b = Math.pow(b,  2);
+		
+		return Math.sqrt(a + b);
+		
+	}
 
 }

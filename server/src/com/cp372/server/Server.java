@@ -34,7 +34,7 @@ public final class Server {
 				
 		
 		Shape s = ShapeFactory.createShape(points);
-		s.printPoints();
+		//s.printPoints();
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
 
 		points.clear();
@@ -43,7 +43,7 @@ public final class Server {
 		points.add(new Point(3, 2));		
 		points.add(new Point(1, 1));
 		s = ShapeFactory.createShape(points);
-		s.printPoints();
+		//s.printPoints();
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
 
 		points.clear();
@@ -53,7 +53,7 @@ public final class Server {
 		points.add(new Point(1, 1));
 		
 		s = ShapeFactory.createShape(points);
-		s.printPoints();
+		//s.printPoints();
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
 
 		points.clear();
@@ -62,30 +62,33 @@ public final class Server {
 		points.add(new Point(3, 3));		
 		points.add(new Point(1, 2));
 		s = ShapeFactory.createShape(points);
-		s.printPoints();
+		//s.printPoints();
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
 
+		
+		points.clear();
+		points.add(new Point(0, 4));
+		points.add(new Point(0, 0));
+		points.add(new Point(4, 0));		
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
+	
+		
 		points.clear();
 		points.add(new Point(2, 2));
 		points.add(new Point(2, 3));
 		points.add(new Point(9, 2));		
 		points.add(new Point(1, 1));
 		s = ShapeFactory.createShape(points);
-		s.printPoints();
+		//s.printPoints();
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
+	
 
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
 		Iterable<Shape> shapes = ShapeStorage.getInstance().getShapeByOccurence(s, 2);
 
-		for(Shape x : shapes) {
-			System.out.println(x);
-		}
 		
-		System.out.println("\n\n Clear....");
-		
-		Shape f = ShapeFactory.createShape(points2);
-		f.printPoints();
 		
 		
 		// Process HTTP service requests in an infinite loop.

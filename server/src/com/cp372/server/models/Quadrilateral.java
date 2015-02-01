@@ -83,6 +83,28 @@ public class Quadrilateral extends Shape {
 		System.out.println(angleD);
 		System.out.println("------------");
 		//TODO: Implement the actual flags...
+		if(angleA+angleB+angleC+angleD==360){
+			if(a==b && a==c && a==d && angleA == 90 && 90==angleB && angleC==90&& angleD==90){
+				this.addProperty(QuadProperty.SQUARE);
+			}
+			if(a==c&&b==d&&angleA==90& angleB==90 && angleA == 90 && 90==angleB && angleC==90&& angleD==90){
+				this.addProperty(QuadProperty.RECTANGLE);
+			}
+			if(a==c && b==d && angleA==angleC & angleB==angleD ){
+				this.addProperty(QuadProperty.PARALLELOGRAM);
+			}
+			if(a==c && b==d && a==d && angleA==angleC & angleB==angleD ){
+				this.addProperty(QuadProperty.RHOMBUS);
+			}
+			
+			if((angleA+angleB==180&&angleC+angleD==180)||(angleB+angleC==180&&angleD+angleA==180))
+			{
+				this.addProperty(QuadProperty.TRAPEZOID);
+			}
+		}
+		else{
+			
+		}
 		
 	}
 	

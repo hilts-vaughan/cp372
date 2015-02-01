@@ -33,7 +33,7 @@ public class ShapeReader {
 
 	}
 
-	public Iterable<Shape> processQuery(String type, Map<String, String> params)
+	public Iterable<ShapeEntry> processQuery(String type, Map<String, String> params)
 			throws Exception {
 
 		// Do an initial filter by type. Next, we simply filter based on the
@@ -52,13 +52,8 @@ public class ShapeReader {
 			}
 		}
 
-		// Fetch all entries shapes, put into list
-		List<Shape> shapes = new ArrayList<Shape>();
-		for (ShapeEntry entry : results) {
-			shapes.add(entry.getShape());
-		}
 
-		return shapes;
+		return results;
 	}
 
 }

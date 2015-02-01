@@ -92,6 +92,26 @@ public class Quadrilateral extends Shape {
 		setFlags();
 	}
 
+	@Override
+	protected String getPackedProperties() {
+
+		
+		
+		String packed = "";
+		
+		for(QuadProperty property : this._properties) {
+			packed += property.toString() + ",";
+		}
+		
+		//packed = packed.substring(0, packed.length() - 1);
+		
+		
+		//TODO: Return packed
+		return "";
+		
+	}
+
+	
 	
 	
 }

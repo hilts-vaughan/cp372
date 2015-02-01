@@ -110,4 +110,24 @@ public abstract class Shape {
 		return new Point(x, y);
 	}
 
+	protected abstract String getPackedProperties();
+	
+	public String getPackedString() {
+		
+		String packedPoints = "";
+		
+		// Extract our packed points
+		for(Point p : this._vertices) {
+			packedPoints += p.getX() + "," + p.getY() + ",";
+		}
+		
+		// Get off the ending of the string
+		packedPoints = packedPoints.substring(0, packedPoints.length() - 1);
+		
+		String packedProperties = getPackedProperties();
+		
+		return packedPoints + ":" + packedProperties;
+		
+	}
+
 }

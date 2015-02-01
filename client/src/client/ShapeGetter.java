@@ -207,7 +207,8 @@ public class ShapeGetter {
 			os.print("GET " + getText.getText() + ENDLINE);
 			String response = null;
 			try {
-				response = is.readUTF() + "ok";
+				
+				response = is.readLine();
 				System.out.println(response);
 				String[] parts = response.split("&");
 				if (parts.length > 0 && parts[0].contains("200 ok")) {

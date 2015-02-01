@@ -111,4 +111,18 @@ public class Triangle extends Shape {
 		createFlags();
 	}
 
+	@Override
+	protected String getPackedProperties() {
+
+		String packed = "";
+		
+		for(TriangleProperty property : this._properties) {
+			packed += property.toString() + ",";
+		}
+		
+		packed = packed.substring(0, packed.length() - 1);
+		
+		return packed;
+	}
+
 }

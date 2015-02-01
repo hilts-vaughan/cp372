@@ -30,7 +30,7 @@ final class HttpRequest implements Runnable {
 			try {
 				processRequest();
 			} catch (Exception e) {
-				//System.out.println(e);
+				System.out.println(e);
 			}
 		}
 	}
@@ -44,7 +44,7 @@ final class HttpRequest implements Runnable {
 		// Set up input stream filters.
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		boolean stop = false;
-		
+
 		while (!stop) {
 
 			String requestLine = null;
@@ -53,11 +53,28 @@ final class HttpRequest implements Runnable {
 				System.out.println("Client Request: " + requestLine);
 
 				// Get some shape responses via the the parser
-				Iterable<Shape> shapes = parseRequest(requestLine);
+				Iterable<ShapeEntry> shapes = parseRequest(requestLine);
 
-				System.out.println(shapes);
+				String response = "200 OK ";
 
-				os.writeUTF("ok");
+				// Generate a query string for each shape
+				for (ShapeEntry entry : shapes) {
+					String packedString = entry.getShape().getPackedString();
+					int count = entry.getCount();
+					packedString += ":" + count;
+					response += packedString;
+					response += "&";
+				}
+
+				// Trim if required
+				if (response.length() > 0)
+					response = response.substring(0, response.length() - 1);
+
+				System.out.println(response);
+
+				// Send our response code
+				os.writeUTF(response + CRLF);
+
 				if (requestLine.equals("STOP")) {
 					stop = true;
 					break;
@@ -73,7 +90,8 @@ final class HttpRequest implements Runnable {
 		socket.close();
 	}
 
-	private Iterable<Shape> parseRequest(String requestLine) throws Exception {
+	private Iterable<ShapeEntry> parseRequest(String requestLine)
+			throws Exception {
 
 		// Split into lines for reading, as the HTTP request should be
 		String lines[] = requestLine.split("\\t");
@@ -109,12 +127,12 @@ final class HttpRequest implements Runnable {
 					// Return the stuff we need
 
 					return _shapeReader.processQuery(aux, parameters);
-					
+
 				} catch (Exception e) {
 					throw e;
 				}
 			} else if (verb.equals("POST")) {
-				return new ArrayList<Shape>();
+				return new ArrayList<ShapeEntry>();
 			} else {
 				throw new IllegalRequestException(requestLine);
 			}

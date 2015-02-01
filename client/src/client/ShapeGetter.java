@@ -24,12 +24,13 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.Semaphore;
+
 public class ShapeGetter {  
 	//Note: Typically the main method will be in a 
 	//separate class. As this is a simple one class 
 	//example it's all in the one class. 
-	
-   
+	private final Semaphore request = new Semaphore(1);
     
     static Socket shapeConnectionSocket = null;
 	static PrintStream os = null;
@@ -45,7 +46,8 @@ public class ShapeGetter {
 	JButton connect = new JButton("Connect");
 	JButton getBut = new JButton( "Get");
 	JButton sendBut = new JButton("Send");
-	
+	Thread send=new sendThread();
+	Thread get =new getThread();
 	
 	public static void main(String[] args) 
 	{  
@@ -101,7 +103,9 @@ public class ShapeGetter {
 		guiFrame.add(displayList);
 		guiFrame.setVisible(true); 
 
-		
+//for saving some time
+		ipText.setText("localhost");
+		portText.setText("5555");
 		
 		
 		
@@ -131,11 +135,19 @@ public class ShapeGetter {
 		getBut.addActionListener(new ActionListener() 
 		{ 
 			@Override public void actionPerformed(ActionEvent event) 
-			{ 
-				
-				
-					os.print("GET "+ getText.getText() +ENDLINE);
-					workerGet.execute();
+			{ 	
+				if(os!=null){
+					//if(!os.checkError()){
+					Thread get = new getThread();
+					get.start();
+					//}
+					//else{
+				//		System.out.println("there was a problem with sending");
+			//		}
+				}else{
+					System.out.println("You forgot to connect");
+				}
+						
 			} 
 			
 		}
@@ -144,9 +156,18 @@ public class ShapeGetter {
 		{ 
 			@Override public void actionPerformed(ActionEvent event) 
 			{ 
-				os.print("POST "+ shapeText.getText() +ENDLINE);	
-				workerSend.execute();				
-			
+			if(os!=null){
+				//if(!os.checkError()){
+				Thread send = new sendThread();
+				send.start();
+			//	}else{
+				//	System.out.println("there was a problem with sending");
+			//	}
+				
+			}	
+			else{
+				System.out.println("You forgot to connect");
+			}
 			} 
 			}
 		);
@@ -165,40 +186,73 @@ public class ShapeGetter {
 		is = new DataInputStream(shapeConnectionSocket.getInputStream());  
 	}
 	
-	SwingWorker<Void, Void> workerGet = new SwingWorker<Void, Void>() {
-		
-		@Override
-		protected Void doInBackground() throws Exception {
-			String response = is.readUTF();
-			System.out.println(response);
-			String[] parts = response.split("&");
-			if(parts.length>0 && parts[0].contains("200 ok"))
-			{
-				parts[0]= (String) parts[0].subSequence(7, parts[0].length());
-			//	ArrayList<Object> shapesArray = new ArrayList<Object>();
-			  	//for(int i=0; i<parts.length; i++){
-			//		shapesArray.add(parts[i]);
-			//	}
-			//	shapesArray.add("ok");
-				
-			//	displayList.setListData((String[]) shapesArray.toArray());
-				parts[0]="WORK";
-				displayList.setListData(parts);
-			
-			}
-			return null;
+	  public class sendThread extends Thread {
+
+		    public void run(){
+		    	try {
+					request.acquire();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					System.out.println("oops");
 				}
-		};
+		    	os.print("POST "+ shapeText.getText() +ENDLINE);
+		    	String response = null;
+				try {
+					response = is.readUTF();
+					System.out.println(response);
+				} catch (IOException e) {
+					System.out.println("Opps");
+					shapeConnectionSocket=null;
+					is=null;
+					os=null;
+				}
+				
+				request.release();
+				is=null;
+				os=null;
+		    }
+		  }
 		 
-		SwingWorker<Void, Void> workerSend = new SwingWorker<Void, Void>() {
-			
-			@Override
-			protected Void doInBackground() throws Exception {
-				String response = is.readUTF();
-				System.out.println(response);
-				return null;
-					}
-			};
+	  public class getThread extends Thread {
+
+		    public void run(){
+		    	try {
+					request.acquire();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		    	os.print("GET "+ getText.getText() +ENDLINE);
+		    	String response = null;
+				try {
+					response = is.readUTF()+"ok";
+					System.out.println(response);
+					String[] parts = response.split("&");
+					if(parts.length>0 && parts[0].contains("200 ok"))
+					{
+						parts[0]= (String) parts[0].subSequence(7, parts[0].length());
+					//	ArrayList<Object> shapesArray = new ArrayList<Object>();
+					  	//for(int i=0; i<parts.length; i++){
+					//		shapesArray.add(parts[i]);
+					//	}
+					//	shapesArray.add("ok");
+						
+					//	displayList.setListData((String[]) shapesArray.toArray());
+						parts[0]="WORK";
+						String[] because = {"hello","do", "you", "work"};
+						displayList.setListData(because);
+					}	
+			    } catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.out.println("Well");
+					shapeConnectionSocket=null;
+					is=null;
+					os=null;
+				
+			}
+				request.release();
+		  }
+	  }
 			 
 	
 	}

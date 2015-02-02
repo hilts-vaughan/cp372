@@ -23,6 +23,7 @@ public class PolygonFilter implements ShapeFilter {
 			Object context) {
 
 		String type = (String) context;
+		System.out.println(type);
 		List<ShapeEntry> results = new ArrayList<ShapeEntry>();
 
 		for (ShapeEntry entry : shapes) {

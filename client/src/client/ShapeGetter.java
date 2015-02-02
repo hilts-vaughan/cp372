@@ -20,6 +20,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -110,11 +111,13 @@ public class ShapeGetter {
 		final JPanel display = new JPanel();
 
 		this._infoArea
-				.setText("If you select a shape, information will appear here about it.");
+				.setText("Please select a shape.");
 		this._infoArea.setEditable(false);
 		this._infoArea.setColumns(5);
 		this._infoArea.setBackground(Color.BLACK);
 		this._infoArea.setForeground(Color.WHITE);
+        this._infoArea.setFont(new Font("monospaced", Font.PLAIN, 12));
+
 
 		guiFrame.add(this._infoArea);
 

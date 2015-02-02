@@ -52,7 +52,8 @@ public class Shape {
 	public String getInfo() {
 		String info = "Type: " + getType() + "\n";
 		info += "Occurences: " + _count + "\n";
-		info += "Properties: " + _properties;
+		info += "Properties: " + _properties + "\n";
+		info += "Points: " + _vertices;
 		
 		return info;
 	}

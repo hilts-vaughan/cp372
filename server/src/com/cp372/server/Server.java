@@ -99,8 +99,49 @@ public final class Server {
 		s = ShapeFactory.createShape(points);
 		s.printPoints();
 		
+
+		points.clear();
+		points.add(new Point(0, 0));
+		points.add(new Point(1, 1));
+		points.add(new Point(0, 1));		
+		points.add(new Point(1, 0));
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
+		
+		points.clear();
+		points.add(new Point(0, 0));
+		points.add(new Point(2, 3));
+		points.add(new Point(5, 3));		
+		points.add(new Point(7, 0));
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
 		
 		
+		points.clear();
+		points.add(new Point(0, 0));
+		points.add(new Point(0, 2));
+		points.add(new Point(1, 2));		
+		points.add(new Point(1, 0));
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
+		
+		
+		points.clear();
+		points.add(new Point(0, 0));
+		points.add(new Point(4, 4));
+		points.add(new Point(0, 4));		
+		points.add(new Point(4, 0));
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
+		
+		
+		points.clear();
+		points.add(new Point(0, 0));
+		points.add(new Point(3, 4));
+		points.add(new Point(8, 4));		
+		points.add(new Point(5, 0));
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
 		// Process HTTP service requests in an infinite loop.
 		while (true) {
 			// Listen for a TCP connection request.

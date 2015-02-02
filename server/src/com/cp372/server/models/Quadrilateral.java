@@ -48,20 +48,11 @@ public class Quadrilateral extends Shape {
 		double angleB = 0;
 		double angleC = 0;
 		double angleD = 0;
-
-		System.out.println("------------");
-		System.out.println(a);
-		System.out.println(b);
-		System.out.println(c);
-		System.out.println(d);
-		System.out.println(c);
-		System.out.println(center2);
-		System.out.println("------------");
 		
 		angleA= Math.acos((Math.pow(d, 2)+Math.pow(a, 2)-Math.pow(center2, 2))/(2*d*a));
-		angleB= Math.acos((Math.pow(c, 2)+Math.pow(b, 2)-Math.pow(center1, 2))/(2*c*b));
-		angleC= Math.acos((Math.pow(d, 2)+Math.pow(c, 2)-Math.pow(center2, 2))/(2*d*c));
-		angleD= Math.acos((Math.pow(a, 2)+Math.pow(d, 2)-Math.pow(center1, 2))/(2*a*d));
+		angleB= Math.acos((Math.pow(a, 2)+Math.pow(b, 2)-Math.pow(center1, 2))/(2*a*b));
+		angleC= Math.acos((Math.pow(b, 2)+Math.pow(c, 2)-Math.pow(center2, 2))/(2*b*c));
+		angleD= Math.acos((Math.pow(c, 2)+Math.pow(d, 2)-Math.pow(center1, 2))/(2*c*d));
 		
 		
 				
@@ -69,21 +60,17 @@ public class Quadrilateral extends Shape {
 		angleB = Math.toDegrees(angleB);
 		angleC = Math.toDegrees(angleC);
 		angleD = Math.toDegrees(angleD);
-
+		
 		// Normalize due to floating math fail...
-		angleA = Math.round(angleA);
-		angleB = Math.round(angleB);
-		angleC = Math.round(angleC);
-		angleD = Math.round(angleD);
-
-		System.out.println("------------");
-		System.out.println(angleA);
-		System.out.println(angleB);
-		System.out.println(angleC);
-		System.out.println(angleD);
-		System.out.println("------------");
+		
+		angleA = (int) Math.round(angleA);
+		angleB = (int) Math.round(angleB);
+		angleC = (int) Math.round(angleC);
+		angleD = (int) Math.round(angleD);
+		
+		
+		
 		//TODO: Implement the actual flags...
-		if(angleA+angleB+angleC+angleD==360){
 			if(a==b && a==c && a==d && angleA == 90 && 90==angleB && angleC==90&& angleD==90){
 				this.addProperty(QuadProperty.SQUARE);
 			}
@@ -101,10 +88,11 @@ public class Quadrilateral extends Shape {
 			{
 				this.addProperty(QuadProperty.TRAPEZOID);
 			}
-		}
-		else{
-			
-		}
+		
+		
+		
+		System.out.println(this._properties);
+		System.out.println("-----------");
 		
 	}
 	

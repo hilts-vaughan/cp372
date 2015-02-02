@@ -329,7 +329,9 @@ public class ShapeGetter {
 				response = is.readUTF();
 
 				if (response.indexOf("200") > -1) {
-					displayInfo("POST was  a success. Server database updated.");
+					String type = response.substring(response.indexOf("Type:") + "Type:".length());
+					type = type.trim().equals("Q") ? "Quadrilateral" : "Triangle";	
+					displayInfo("POST was  a success. Server database updated. \n Shape Type: " + type);
 				} else {
 					this.doBadRequest(response);
 				}

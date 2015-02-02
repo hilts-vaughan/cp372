@@ -30,7 +30,8 @@ POST:
 0 0 0 2 1 2 1 0
 0 0 3 4 8 4 5 0
 0 0 3 4 8 4 5 0
-
+0 1 1 0 0 0 1 1
+0 0 0 4 3 2
 
 GET:
 
@@ -45,7 +46,9 @@ B	Occurrences: 0
 B	Shares: 4 0
 B	Shares: 4 0 0 0
 B	Type: Square
-
+Q	Type: Square	Shares: 0 2
+Q	Type: Square	Shares: 0 1
+T	Type: Acute
 
 You can test errors with stuff like...
 

@@ -11,6 +11,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -40,14 +41,14 @@ public class ShapeGetter {
 
 	final String ENDLINE = "\r\n";
 
-	final JTextField getText = new JTextField(20);
-	final JTextField ipText = new JTextField(20);
-	final JTextField portText = new JTextField(4);
-	final JTextField shapeText = new JTextField(20);
-
+	final JTextArea getText = new JTextArea(1,20);
+	final JTextArea ipText = new JTextArea(1,20);
+	final JTextArea portText = new JTextArea(1,10);
+	final JTextArea shapeText = new JTextArea(1,20);
+	
+	
 	@SuppressWarnings("rawtypes")
 	private final JList displayList;
-
 	private final ArrayList<Shape> _shapes = new ArrayList<Shape>();
 
 	private final JTextArea _infoArea = new JTextArea();
@@ -63,7 +64,7 @@ public class ShapeGetter {
 	}
 
 	public ShapeGetter() {
-
+		
 		this.displayList = new JList<Shape>();
 		// this._shapes.
 		JScrollPane listScrollPane = new JScrollPane(displayList,
@@ -75,8 +76,20 @@ public class ShapeGetter {
 		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		guiFrame.setTitle("ShapeGetter");
 		guiFrame.setSize(400, 700);
-
+		getText.setTabSize(2);
+		shapeText.setTabSize(2);
+		JScrollPane getScrollPane = new JScrollPane(getText,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		getText.setLineWrap(false);
 		// guiFrame.add(grid);
+		JScrollPane shapeScrollPane = new JScrollPane(shapeText,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		shapeText.setLineWrap(false);
+		
+		JScrollPane hostScrollPane = new JScrollPane(ipText,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		ipText.setLineWrap(false);
+		JScrollPane portScrollPane = new JScrollPane(portText,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		portText.setLineWrap(false);
+		
+		
 		JLabel ipLbl = new JLabel("Host:");
 		JLabel portLbl = new JLabel("Port:");
 
@@ -84,11 +97,11 @@ public class ShapeGetter {
 
 		final JPanel ipPanel = new JPanel();
 		ipPanel.add(ipLbl);
-		ipPanel.add(ipText);
+		ipPanel.add(hostScrollPane);
 		guiFrame.add(ipPanel);
 		final JPanel portPanel = new JPanel();
 		portPanel.add(portLbl);
-		portPanel.add(portText);
+		portPanel.add(portScrollPane);
 		portPanel.add(connect);
 		final JPanel buttonPanel = new JPanel();
 		buttonPanel.add(portPanel);
@@ -96,13 +109,13 @@ public class ShapeGetter {
 		final JPanel getPanel = new JPanel();
 
 		getPanel.add(getBut);
-		getPanel.add(getText);
+		getPanel.add(getScrollPane);
 
 		guiFrame.add(buttonPanel);
 		guiFrame.add(getPanel);
 		final JPanel userInputPanel = new JPanel();
 		userInputPanel.add(sendBut);
-		userInputPanel.add(shapeText);
+		userInputPanel.add(shapeScrollPane);
 		guiFrame.add(userInputPanel);
 
 		this._infoArea.setText("Please select a shape.");
@@ -195,12 +208,12 @@ public class ShapeGetter {
 				JOptionPane.ERROR_MESSAGE);
 	}
 
-	void openConnection(JTextField ipText, JTextField portText)
+	void openConnection(JTextArea ipText2, JTextArea portText2)
 			throws NumberFormatException, UnknownHostException, IOException {
-		System.out.println(ipText.getText());
-		System.out.println(Integer.parseInt(portText.getText()));
-		shapeConnectionSocket = new Socket(ipText.getText(),
-				Integer.parseInt(portText.getText()));
+		System.out.println(ipText2.getText());
+		System.out.println(Integer.parseInt(portText2.getText()));
+		shapeConnectionSocket = new Socket(ipText2.getText(),
+				Integer.parseInt(portText2.getText()));
 		os = new PrintStream(shapeConnectionSocket.getOutputStream());
 		is = new DataInputStream(shapeConnectionSocket.getInputStream());
 	}

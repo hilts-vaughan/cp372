@@ -21,8 +21,8 @@ public class Shape {
 		// Convert pieces here
 		for(int i = 0; i < pointPieces.length; i+= 2) {
 			
-			String pointPiece = pointPieces[i];
-			String pointPiece2 = pointPieces[i + 1];
+			String pointPiece = pointPieces[i].trim();
+			String pointPiece2 = pointPieces[i + 1].trim();
 			
 			int x = Integer.parseInt(pointPiece.trim());
 			int y = Integer.parseInt(pointPiece2.trim());

@@ -43,12 +43,18 @@ public class ShapeReader {
 				.getInstance().getShapes(), type);
 
 		for (Map.Entry<String, String> entry : params.entrySet()) {
-			switch (entry.getKey()) {
+			switch (entry.getKey().toUpperCase()) {
 
 			case HEADER_OCCURENCES:
 
 				try {
 					int occurences = Integer.parseInt(entry.getValue());
+
+					if (occurences < 0) {
+						throw new BadRequestException(
+								"A negative integer was passed to the OCCURRENCES header.");
+					}
+
 					results = _occurenceFilter.filter(results, occurences);
 				} catch (Exception exception) {
 					throw new BadRequestException(

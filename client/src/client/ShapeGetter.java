@@ -225,11 +225,16 @@ public class ShapeGetter {
 
 	void openConnection(JTextField ipText2, JTextField portText2)
 			throws NumberFormatException, UnknownHostException, IOException {
+		if(shapeConnectionSocket==null){
 		shapeConnectionSocket = new Socket(ipText2.getText(),
 				Integer.parseInt(portText2.getText()));
 		os = new PrintStream(shapeConnectionSocket.getOutputStream());
 		is = new DataInputStream(shapeConnectionSocket.getInputStream());
-	}
+		}
+		else {
+			displayError("You already Have a connection \nPlease disconnect first.");
+		}
+		}
 	void closeConnection() 
 			throws NumberFormatException, UnknownHostException, IOException {
 		if(shapeConnectionSocket!=null){
@@ -239,6 +244,8 @@ public class ShapeGetter {
 		shapeConnectionSocket = null;
 		is = null;
 		os = null;
+		}else {
+			displayError("There is currently no connection.");
 		}
 		
 	}

@@ -13,6 +13,8 @@ public class PointFilter implements ShapeFilter {
 			Object context) {
 
 		List<ShapeEntry> results = new ArrayList<ShapeEntry>();
+		
+		@SuppressWarnings("unchecked")
 		List<Point> shares = (ArrayList<Point>) context;
 
 		// Filter out those that don't chare points

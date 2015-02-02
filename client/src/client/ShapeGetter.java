@@ -5,7 +5,6 @@ package client;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -17,7 +16,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -48,7 +46,9 @@ public class ShapeGetter {
 	final JTextField portText = new JTextField(4);
 	final JTextField shapeText = new JTextField(20);
 
+	@SuppressWarnings("rawtypes")
 	private final JList displayList;
+	
 	private final ArrayList<Shape> _shapes = new ArrayList<Shape>();
 
 	private final JTextArea _infoArea = new JTextArea();
@@ -75,7 +75,6 @@ public class ShapeGetter {
 		guiFrame.setTitle("ShapeGetter");
 		guiFrame.setSize(400, 700);
 
-		JPanel grid = new JPanel(new FlowLayout());
 
 		// guiFrame.add(grid);
 		JLabel ipLbl = new JLabel("Host:");
@@ -105,7 +104,6 @@ public class ShapeGetter {
 		userInputPanel.add(sendBut);
 		userInputPanel.add(shapeText);
 		guiFrame.add(userInputPanel);
-		final JPanel display = new JPanel();
 
 		this._infoArea
 				.setText("Please select a shape.");
@@ -230,6 +228,8 @@ public class ShapeGetter {
 			}
 
 			request.release();
+			is = null;
+			os = null;
 		}
 	}
 
@@ -264,6 +264,7 @@ public class ShapeGetter {
 				// We need to delegate or we'll be in trouble with cross thread
 				// violations
 				SwingUtilities.invokeLater(new Runnable() {
+					@SuppressWarnings("unchecked")
 					@Override
 					public void run() {
 						displayList.setListData(_shapes.toArray());

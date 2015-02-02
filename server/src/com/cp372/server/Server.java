@@ -14,6 +14,8 @@ public final class Server {
 		int port = 5555;// new Integer(argv[0]).intValue();
 		// System.out.println(sss.charAt(0));
 		// Establish the listen socket.
+		
+		@SuppressWarnings("resource")
 		ServerSocket socket = new ServerSocket(port);
 
 		System.out.println("Preparing to launch the web server...");
@@ -116,7 +118,6 @@ public final class Server {
 
 		//ShapeStorage.getInstance().insertOrUpdateShape(s);
 		//ShapeStorage.getInstance().insertOrUpdateShape(s);
-		Iterable<Shape> shapes = ShapeStorage.getInstance().getShapeByOccurence(s, 2);
 
 		points.clear();
 		points.add(new Point(0, 0));

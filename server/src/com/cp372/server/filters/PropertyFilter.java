@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cp372.server.ShapeEntry;
-import com.cp372.server.models.Point;
 
 /**
  * Filters on enumeration types against the different shapes
@@ -18,6 +17,8 @@ public class PropertyFilter implements ShapeFilter {
 		//TODO: Apply some filtering logic
 		
 		List<ShapeEntry> results = new ArrayList<ShapeEntry>();
+		
+		@SuppressWarnings("unchecked")
 		List<String> shares = (ArrayList<String>) context;
 
 		// Filter out those that don't chare points

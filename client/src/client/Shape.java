@@ -19,10 +19,13 @@ public class Shape {
 		String[] pointPieces = sequences[0].split(",");
 		
 		// Convert pieces here
-		for(String pointPiece : pointPieces) {
+		for(int i = 0; i < pointPieces.length; i+= 2) {
+			
+			String pointPiece = pointPieces[i];
+			String pointPiece2 = pointPieces[i + 1];
 			
 			int x = Integer.parseInt(pointPiece.trim());
-			int y = Integer.parseInt(pointPiece.trim());
+			int y = Integer.parseInt(pointPiece2.trim());
 			
 			_vertices.add(new Point(x, y));
 		}
@@ -34,10 +37,24 @@ public class Shape {
 	
 
 	public String toString() {
-		int vertexCount = this._vertices.size();
-		String name = vertexCount == 3 ? "Triangle" : "Quadrilateral";
+		String name = getType();
 		
 		return name + " with points " + this._vertices.toString() + "";
+	}
+
+
+	private String getType() {
+		int vertexCount = this._vertices.size();
+		String name = vertexCount == 3 ? "Triangle" : "Quadrilateral";
+		return name;
+	}
+	
+	public String getInfo() {
+		String info = "Type: " + getType() + "\n";
+		info += "Occurences: " + _count + "\n";
+		info += "Properties: " + _properties;
+		
+		return info;
 	}
 	
 	

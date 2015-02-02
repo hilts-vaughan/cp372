@@ -8,12 +8,16 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -46,10 +50,12 @@ public class ShapeGetter {
 	final JTextField ipText = new JTextField(20);
 	final JTextField portText = new JTextField(4);
 	final JTextField shapeText = new JTextField(20);
-	
+
 	private final JList displayList;
 	private final ArrayList<Shape> _shapes = new ArrayList<Shape>();
-	
+
+	private final JTextArea _infoArea = new JTextArea();
+
 	JButton connect = new JButton("Connect");
 	JButton getBut = new JButton("Get");
 	JButton sendBut = new JButton("Send");
@@ -102,6 +108,26 @@ public class ShapeGetter {
 		userInputPanel.add(shapeText);
 		guiFrame.add(userInputPanel);
 		final JPanel display = new JPanel();
+
+		this._infoArea
+				.setText("If you select a shape, information will appear here about it.");
+		this._infoArea.setEditable(false);
+		this._infoArea.setColumns(5);
+		this._infoArea.setBackground(Color.BLACK);
+		this._infoArea.setForeground(Color.WHITE);
+
+		guiFrame.add(this._infoArea);
+
+		this.displayList.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int index = displayList.getSelectedIndex();
+				if (index > -1) {
+					updateInformation(_shapes.get(index));
+				}
+			}
+		});
 
 		guiFrame.add(displayList);
 		guiFrame.setVisible(true);
@@ -165,6 +191,14 @@ public class ShapeGetter {
 			}
 		});
 
+	}
+
+	void updateInformation(Shape shape) {
+		if (shape == null) {
+			this._infoArea.setText("");
+		} else {
+			this._infoArea.setText(shape.getInfo());
+		}
 	}
 
 	void openConnection(JTextField ipText, JTextField portText)
@@ -232,11 +266,13 @@ public class ShapeGetter {
 					_shapes.add(shape);
 				}
 
-				// We need to delegate or we'll be in trouble with cross thread violations
+				// We need to delegate or we'll be in trouble with cross thread
+				// violations
 				SwingUtilities.invokeLater(new Runnable() {
 					@Override
-					public void run() {					
+					public void run() {
 						displayList.setListData(_shapes.toArray());
+						updateInformation(null);
 					}
 				});
 

@@ -218,10 +218,16 @@ public class ShapeGetter {
 			String response = null;
 			try {
 				response = is.readUTF();
-				
-				displayError("This isn't an error; but I thought you might like to know your POST went okay.");
-				
-			} catch (IOException e) {
+
+				if (response.indexOf("200") > -1) {
+					displayError("This isn't an error; but I thought you might like to know your POST went okay.");
+				} else {
+					this.doBadRequest(response);
+				}
+
+			}
+
+			catch (IOException e) {
 				System.out.println("Opps");
 				shapeConnectionSocket = null;
 				is = null;
@@ -231,6 +237,17 @@ public class ShapeGetter {
 			request.release();
 
 		}
+
+		private void doBadRequest(String response) {
+			final String searchFor = "Reason:";
+
+			int index = response.indexOf(searchFor);
+			String reason = response.substring(index + searchFor.length() + 1)
+					.trim();
+
+			displayError("Bad Request: " + reason);
+		}
+
 	}
 
 	public class getThread extends Thread {
@@ -261,9 +278,9 @@ public class ShapeGetter {
 				}
 
 			} catch (IOException e) {
-				
+
 				// Clean up if we're forced to
-				
+
 				shapeConnectionSocket = null;
 				is = null;
 				os = null;

@@ -111,6 +111,30 @@ public abstract class Shape {
 		return stuff;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+
+		Shape otherShape = (Shape) other;
+
+		if (otherShape == null)
+			return false;
+
+		if (this._vertices.size() != otherShape._vertices.size())
+			return false;
+
+		for (Point p : this._vertices) {
+			boolean found = false;
+			for (Point q : otherShape._vertices) {
+				if (p.equals(q))
+					found = true;
+			}
+
+			if (!found)
+				return false;
+		}
+
+		return true;
+	}
 
 	public abstract String getPackedProperties();
 

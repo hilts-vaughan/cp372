@@ -32,6 +32,20 @@ public class Point {
 		return ("(" + x + "," + y + ")");
 	}
 	
+	@Override
+	public boolean equals(Object other) {
+		
+		Point otherPoint = (Point) other;
+		
+		if(otherPoint == null)
+			return false;
+		
+		if(otherPoint.x == this.x && otherPoint.y == this.y)
+			return true;
+		else
+			return false;
+	}
+	
 	/**
 	 * Computes the distance between this point and another point.
 	 * @param point	The other point to compare to

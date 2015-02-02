@@ -3,6 +3,7 @@ package client;
 //Imports are listed in full to show what's being used
 //could just import javax.swing.* and java.awt.* etc.. 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -76,7 +77,7 @@ public class ShapeGetter {
 		// make sure the program exits when the frame closes
 		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		guiFrame.setTitle("ShapeGetter");
-		guiFrame.setSize(300, 700);
+		guiFrame.setSize(400, 700);
 
 		JPanel grid = new JPanel(new FlowLayout());
 
@@ -145,16 +146,9 @@ public class ShapeGetter {
 
 				try {
 					openConnection(ipText, portText);
-				} catch (NumberFormatException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (UnknownHostException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				} catch (Exception e) {
+					displayError("The connection to the server was refused. Are your settings correct?");
+				} 
 			}
 
 		});
@@ -171,7 +165,7 @@ public class ShapeGetter {
 					// System.out.println("there was a problem with sending");
 					// }
 				} else {
-					System.out.println("You forgot to connect");
+					displayError("Please connect before attempting to use the client.");
 				}
 
 			}
@@ -189,7 +183,7 @@ public class ShapeGetter {
 					// }
 
 				} else {
-					System.out.println("You forgot to connect");
+					displayError("Please connect before attempting to use the client.");
 				}
 			}
 		});
@@ -202,6 +196,10 @@ public class ShapeGetter {
 		} else {
 			this._infoArea.setText(shape.getInfo());
 		}
+	}
+	
+	private void displayError(String reason) {
+		JOptionPane.showMessageDialog (null, reason, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 
 	void openConnection(JTextField ipText, JTextField portText)

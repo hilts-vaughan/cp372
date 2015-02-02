@@ -41,11 +41,9 @@ public class Shape {
 
 	public String toString() {
 		
-		
-		String name = getType();
 		String value = "no values";
-		if(name!=null){
-		value =name + " with points " + this._vertices.toString() + "";
+		if(getType()!=null){
+		value =getType() + " with points " + this._vertices.toString() + "";;
 		}
 		return value;
 	}
@@ -75,5 +73,6 @@ public class Shape {
 	
 	
 }
+
 
 

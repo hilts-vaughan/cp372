@@ -3,7 +3,6 @@ package com.cp372.server.models;
 import java.util.EnumSet;
 import java.util.List;
 
-import com.cp372.server.models.Triangle.TriangleProperty;
 
 public class Quadrilateral extends Shape {
 
@@ -96,7 +95,7 @@ public class Quadrilateral extends Shape {
 	}
 
 	@Override
-	protected String getPackedProperties() {
+	public String getPackedProperties() {
 
 		String packed = "";
 

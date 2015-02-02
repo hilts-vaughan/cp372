@@ -14,9 +14,13 @@ public final class Server {
 		int port = 5555;// new Integer(argv[0]).intValue();
 		// System.out.println(sss.charAt(0));
 		// Establish the listen socket.
+		System.out.println("Preparing to launch the web server...");
+
+		@SuppressWarnings("resource")
 		ServerSocket socket = new ServerSocket(port);
 
-		System.out.println("Preparing to launch the web server...");
+		System.out.println("Socket is now bound at localhost:" + port);
+
 				
 		// Try 4 points
 		
@@ -116,7 +120,6 @@ public final class Server {
 
 		//ShapeStorage.getInstance().insertOrUpdateShape(s);
 		//ShapeStorage.getInstance().insertOrUpdateShape(s);
-		Iterable<Shape> shapes = ShapeStorage.getInstance().getShapeByOccurence(s, 2);
 
 		points.clear();
 		points.add(new Point(0, 0));
@@ -172,8 +175,11 @@ public final class Server {
 		s = ShapeFactory.createShape(points);
 		s.printPoints();
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
+		
+		
 		// Process HTTP service requests in an infinite loop.
 		while (true) {
+			
 			// Listen for a TCP connection request.
 			Socket connection = socket.accept();
 

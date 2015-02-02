@@ -32,7 +32,7 @@ public class PropertyFilter implements ShapeFilter {
 				listProperties.add(s);
 			}
 			
-			if (shares.containsAll(listProperties)) {
+			if (listProperties.containsAll(shares)) {
 				results.add(entry);
 			}
 		}

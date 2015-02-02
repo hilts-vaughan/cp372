@@ -31,6 +31,8 @@ final class HttpRequest implements Runnable {
 				processRequest();
 			} catch (Exception e) {
 				System.out.println(e);
+				System.out.println("An internal server error occured: aborting client");												
+				return;
 			}
 		}
 	}

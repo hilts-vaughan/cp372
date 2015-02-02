@@ -150,10 +150,7 @@ final class HttpRequest implements Runnable {
 						"The shape qualifier is missing from the request");
 			}
 
-			if (tokenizer.hasMoreTokens()) {
-				throw new BadRequestException(
-						"Data followed by the shape qualifier that is not a TAB character is illegal.");
-			}
+	
 
 			// Grab the parameter block
 			HashMap<String, String> parameters = new HashMap<String, String>();
@@ -170,6 +167,12 @@ final class HttpRequest implements Runnable {
 			}
 
 			if (verb.equals("GET")) {
+				
+				if (tokenizer.hasMoreTokens()) {
+					throw new BadRequestException(
+							"Data followed by the shape qualifier that is not a TAB character is illegal.");
+				}
+				
 				try {
 					// Return the stuff we need
 					return _shapeReader.processQuery(aux, parameters);

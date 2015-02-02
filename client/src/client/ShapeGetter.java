@@ -163,7 +163,7 @@ public class ShapeGetter {
 			public void actionPerformed(ActionEvent event) {
 
 				try {
-					closeConnection1();
+					closeConnection();
 				} catch (Exception e) {
 					displayError("The connection to the server was refused. Are your settings correct?");
 				}

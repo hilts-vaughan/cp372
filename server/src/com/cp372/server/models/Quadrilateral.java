@@ -10,7 +10,7 @@ public class Quadrilateral extends Shape {
 			.noneOf(QuadProperty.class);
 
 	public enum QuadProperty {
-		SQUARE, RECTANGLE, RHOMBUS, PARALLELOGRAM, TRAPEZOID
+		SQUARE, RECTANGLE, RHOMBUS, PARALLELOGRAM, TRAPEZOID, CONVEX, CONCAVE
 	};
 
 	public boolean hasProperty(QuadProperty property) {
@@ -22,12 +22,12 @@ public class Quadrilateral extends Shape {
 	}
 
 	private void setFlags() {
-
+		if(!this.hasProperty(QuadProperty.CONCAVE)){
 		Point p1 = this._vertices.get(0);
 		Point p2 = this._vertices.get(1);
 		Point p3 = this._vertices.get(2);
 		Point p4 = this._vertices.get(3);
-
+		
 		double a = p1.distanceFrom(p2);
 		double b = p2.distanceFrom(p3);
 		double c = p3.distanceFrom(p4);
@@ -62,7 +62,10 @@ public class Quadrilateral extends Shape {
 		angleC = (int) Math.round(angleC);
 		angleD = (int) Math.round(angleD);
 
+		System.out.println(angleA+angleB+angleC+angleD);
 		// TODO: Implement the actual flags...
+		if(angleA+angleB+angleC+angleD==360){
+			this.addProperty(QuadProperty.CONVEX);
 		if (a == b && a == c && a == d && angleA == 90 && 90 == angleB
 				&& angleC == 90 && angleD == 90) {
 			this.addProperty(QuadProperty.SQUARE);
@@ -82,10 +85,11 @@ public class Quadrilateral extends Shape {
 				|| (angleB + angleC == 180 && angleD + angleA == 180)) {
 			this.addProperty(QuadProperty.TRAPEZOID);
 		}
-
+		}
+		}
 		System.out.println(this._properties);
 		System.out.println("-----------");
-
+		
 	}
 
 	public Quadrilateral(List<Point> vertices) {

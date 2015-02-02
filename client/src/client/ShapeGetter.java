@@ -43,7 +43,7 @@ public class ShapeGetter {
 
 	final JTextArea getText = new JTextArea(1,20);
 	final JTextField ipText = new JTextField(20);
-	final JTextField portText = new JTextField(10);
+	final JTextField portText = new JTextField(7);
 	final JTextArea shapeText = new JTextArea(1,20);
 	
 	
@@ -53,7 +53,7 @@ public class ShapeGetter {
 
 	private final JTextArea _infoArea = new JTextArea();
 
-	JButton connect = new JButton("Connect");
+	JButton connect = new JButton("Connect/Disconnect");
 	JButton getBut = new JButton("Get");
 	JButton sendBut = new JButton("Send");
 	Thread send = new sendThread();
@@ -206,8 +206,6 @@ public class ShapeGetter {
 
 	void openConnection(JTextField ipText2, JTextField portText2)
 			throws NumberFormatException, UnknownHostException, IOException {
-		System.out.println(ipText2.getText());
-		System.out.println(Integer.parseInt(portText2.getText()));
 		shapeConnectionSocket = new Socket(ipText2.getText(),
 				Integer.parseInt(portText2.getText()));
 		os = new PrintStream(shapeConnectionSocket.getOutputStream());

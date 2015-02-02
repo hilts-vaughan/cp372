@@ -57,10 +57,13 @@ public class ShapeStorage {
 		for (ShapeEntry entry : _shapes) {
 			if (entry.getShape().equals(shape)) {
 				entry.incrementCount();
+				System.out.println("A shape already existed; incrementing counter.");
 				return;
 			}
 		}
 
+		System.out.println("A new shape was detected. Inserting into storage.");
+		
 		// Otherwise, we couldn't find it so we'll insert
 		_shapes.add(new ShapeEntry(shape));
 	}

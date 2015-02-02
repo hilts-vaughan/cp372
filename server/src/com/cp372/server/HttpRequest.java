@@ -99,7 +99,7 @@ final class HttpRequest implements Runnable {
 					response += "\tType: " + this._t;
 				}
 
-				System.out.println(response);
+				System.out.println("Sending response to client: " + response);
 
 				// Send our response code
 				os.writeUTF(response + CRLF);
@@ -210,6 +210,7 @@ final class HttpRequest implements Runnable {
 				try {
 					Shape s = ShapeFactory.createShape(points);
 					ShapeStorage.getInstance().insertOrUpdateShape(s);
+					System.out.println("A shape has been succesfully posted to the server.");
 				}
 
 				catch (BadRequestException exception) {

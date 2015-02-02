@@ -20,7 +20,7 @@ public class OccurenceFilter implements ShapeFilter {
 		List<ShapeEntry> results = new ArrayList<ShapeEntry>();
 
 		for (ShapeEntry entry : shapes) {
-				if(entry.getCount() == occurencesRequired)
+				if(entry.getCount() >= occurencesRequired)
 					results.add(entry);
 		}
 		

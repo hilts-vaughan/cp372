@@ -279,6 +279,7 @@ public class ShapeGetter {
 					Integer.parseInt(portText2.getText()));
 			os = new PrintStream(shapeConnectionSocket.getOutputStream());
 			is = new DataInputStream(shapeConnectionSocket.getInputStream());
+			displayInfo("Connection to the server has been established.");
 		} else {
 			displayError("You already Have a connection \nPlease disconnect first.");
 		}

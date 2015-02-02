@@ -36,37 +36,37 @@ public final class Server {
 				
 		
 		Shape s = null;
-		//= ShapeFactory.createShape(points);
+		s= ShapeFactory.createShape(points);
 		//s.printPoints();
-		//ShapeStorage.getInstance().insertOrUpdateShape(s);
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
 
 		points.clear();
 		points.add(new Point(1, 2));
 		points.add(new Point(2, 3));
 		points.add(new Point(3, 2));		
 		points.add(new Point(1, 1));
-		//s = ShapeFactory.createShape(points);
+		s = ShapeFactory.createShape(points);
 		//s.printPoints();
-		//ShapeStorage.getInstance().insertOrUpdateShape(s);
-
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
+/*
 		points.clear();
 		points.add(new Point(4, 2));
 		points.add(new Point(2, 3));
 		points.add(new Point(2, 2));		
 		points.add(new Point(1, 1));
 		
-		//s = ShapeFactory.createShape(points);
+		s = ShapeFactory.createShape(points);
 		//s.printPoints();
-		//ShapeStorage.getInstance().insertOrUpdateShape(s);
-
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
+*/
 		points.clear();
 		points.add(new Point(6, 2));
 		points.add(new Point(2, 3));
 		points.add(new Point(3, 3));		
 		points.add(new Point(1, 2));
-		//s = ShapeFactory.createShape(points);
+		s = ShapeFactory.createShape(points);
 		//s.printPoints();
-		//ShapeStorage.getInstance().insertOrUpdateShape(s);
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
 
 		
 		points.clear();
@@ -75,17 +75,44 @@ public final class Server {
 		points.add(new Point(4, 0));		
 		s = ShapeFactory.createShape(points);
 		s.printPoints();
-	
-		
+		points.clear();
+		points.add(new Point(4, 4));
+		points.add(new Point(0, 0));
+		points.add(new Point(4, 0));		
+		s = ShapeFactory.createShape(points);
+		s.printPoints();points.clear();
+		points.add(new Point(3, 2));
+		points.add(new Point(0, 1));
+		points.add(new Point(4, 3));		
+		s = ShapeFactory.createShape(points);
+		s.printPoints();points.clear();
+		points.add(new Point(0, 1));
+		points.add(new Point(0, 0));
+		points.add(new Point(1, 0));		
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
+		points.clear();
+		points.add(new Point(0, 0));
+		points.add(new Point(6, 0));
+		points.add(new Point(3, 5));		
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
+		points.clear();
+		points.add(new Point(0, 0));
+		points.add(new Point(6, 9));
+		points.add(new Point(12, 0));		
+		s = ShapeFactory.createShape(points);
+		s.printPoints();
+	/*
 		points.clear();
 		points.add(new Point(2, 2));
 		points.add(new Point(2, 3));
 		points.add(new Point(9, 2));		
 		points.add(new Point(1, 1));
-		//s = ShapeFactory.createShape(points);
+		s = ShapeFactory.createShape(points);
 		//s.printPoints();
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
-	
+*/	
 
 		//ShapeStorage.getInstance().insertOrUpdateShape(s);
 		//ShapeStorage.getInstance().insertOrUpdateShape(s);

@@ -56,6 +56,8 @@ public class ShapeReader {
 					}
 
 					results = _occurenceFilter.filter(results, occurences);
+				} catch (BadRequestException exception) {
+					throw exception;
 				} catch (Exception exception) {
 					throw new BadRequestException(
 							"An integer was not passed to the OCCURRENCES header.");

@@ -301,6 +301,7 @@ public class ShapeGetter {
 			shapeConnectionSocket = null;
 			is = null;
 			os = null;
+			displayInfo("Connection to the server has been terminated.");
 		} else {
 			displayError("There is currently no connection.");
 

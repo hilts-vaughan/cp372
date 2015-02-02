@@ -8,25 +8,17 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.Socket;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 
 
-public final class Server {
+public class Server {
 	@SuppressWarnings("resource")
 	public static void main(String argv[]) throws Exception {
 		// Get the port number from the command line.
@@ -236,7 +228,7 @@ public final class Server {
 		// close socket if we ever manage to leave the loop
 		// socket.close();
 	}
-	final class HttpRequest implements Runnable {
+	final static class HttpRequest implements Runnable {
 		final static String CRLF = "\r\n";
 		final static ShapeReader _shapeReader = new ShapeReader();
 		Socket socket;
@@ -464,7 +456,7 @@ public final class Server {
 
 		}
 	}
-	public class ShapeEntry {
+	public static class ShapeEntry {
 
 		private final Shape _shape;
 		private int _count;
@@ -541,7 +533,7 @@ public final class Server {
 		 * @param points
 		 * @return
 		 */
-		private List<Point> getPointsWithDuplicatesRemoved(List<Point> points) {
+		private static List<Point> getPointsWithDuplicatesRemoved(List<Point> points) {
 			return new ArrayList<Point>(new HashSet<Point>(points));
 		}
 
@@ -612,7 +604,7 @@ public final class Server {
 		}
 
 	}
-	public class ShapeReader {
+	public static class ShapeReader {
 
 		private PolygonFilter _polygonFilter = new PolygonFilter();
 		private OccurenceFilter _occurenceFilter = new OccurenceFilter();
@@ -709,7 +701,7 @@ public final class Server {
 
 			return results;
 		}
-	}public class ShapeStorage {
+	}public static class ShapeStorage {
 		private static ShapeStorage instance = null;
 
 		protected ShapeStorage() {
@@ -772,7 +764,7 @@ public final class Server {
 			_shapes.add(new ShapeEntry(shape));
 		}
 
-	}public class BadRequestException extends Exception {
+	}public static  class BadRequestException extends Exception {
 
 		/**
 		 * Generated serial ID by the IDE
@@ -792,7 +784,7 @@ public final class Server {
 	 * @author Vaughan Hilts
 	 *
 	 */
-	public class InvalidVerticesException extends Exception {
+	public static  class InvalidVerticesException extends Exception {
 
 		/**
 		 * 
@@ -810,7 +802,7 @@ public final class Server {
 	 * @author Vaughan Hilts
 	 *
 	 */
-	public class OccurenceFilter implements ShapeFilter {
+	public static class OccurenceFilter implements ShapeFilter {
 
 		@Override
 		public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes,
@@ -834,7 +826,7 @@ public final class Server {
 	 * @author Vaughan Hilts
 	 *
 	 */
-	public class PointFilter implements ShapeFilter {
+	public static  class PointFilter implements ShapeFilter {
 
 		@Override
 		public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes,
@@ -863,7 +855,7 @@ public final class Server {
 	 * @author Vaughan Hilts
 	 *
 	 */
-	public class PolygonFilter implements ShapeFilter {
+	public static  class PolygonFilter implements ShapeFilter {
 
 		private final static String SHAPE_TYPE_TRIANGLE = "T";
 		private final static String SHAPE_TYPE_QUAD = "Q";
@@ -905,7 +897,7 @@ public final class Server {
 	 * @author Vaughan Hilts
 	 *
 	 */
-	public class PropertyFilter implements ShapeFilter {
+	public static  class PropertyFilter implements ShapeFilter {
 
 		@Override
 		public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes,
@@ -971,7 +963,7 @@ public final class Server {
 	 * @author Vaughan Hilts, Brandon Smith
 	 * 
 	 */
-	public class Point {
+	public static class Point {
 
 		private final int x;
 		private final int y;
@@ -1033,7 +1025,7 @@ public final class Server {
 	 * @author Vaughan Hilts
 	 *
 	 */
-	public class Quadrilateral extends Shape {
+	public static class Quadrilateral extends Shape {
 
 		private EnumSet<QuadProperty> _properties = EnumSet
 				.noneOf(QuadProperty.class);
@@ -1160,7 +1152,7 @@ public final class Server {
 		}
 
 	}
-	public abstract class Shape {
+	public static abstract class Shape {
 
 		// A list of vertices mapped in memory
 		protected List<Point> _vertices;
@@ -1252,7 +1244,7 @@ public final class Server {
 	 * @author Vaughan Hilts
 	 *
 	 */
-	public class Triangle extends Shape {
+	public static class Triangle extends Shape {
 
 		private EnumSet<TriangleProperty> _properties = EnumSet
 				.noneOf(TriangleProperty.class);
@@ -1374,4 +1366,6 @@ public final class Server {
 
 	}
 
+	
+	
 }

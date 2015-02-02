@@ -78,7 +78,6 @@ public class Quadrilateral extends Shape {
 			angleC = (int) Math.round(angleC);
 			angleD = (int) Math.round(angleD);
 
-			System.out.println(angleA + angleB + angleC + angleD);
 			// TODO: Implement the actual flags...
 
 			if (a == b && a == c && a == d && angleA == 90 && 90 == angleB
@@ -103,8 +102,6 @@ public class Quadrilateral extends Shape {
 			}
 		}
 
-		System.out.println(this._properties);
-		System.out.println("-----------");
 
 	}
 

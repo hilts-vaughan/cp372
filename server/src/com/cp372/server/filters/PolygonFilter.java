@@ -26,7 +26,6 @@ public class PolygonFilter implements ShapeFilter {
 			Object context) throws BadRequestException {
 
 		String type = (String) context;
-		System.out.println(type);
 		List<ShapeEntry> results = new ArrayList<ShapeEntry>();
 
 		for (ShapeEntry entry : shapes) {

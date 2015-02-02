@@ -6,6 +6,11 @@ import java.util.List;
 import com.cp372.server.ShapeEntry;
 import com.cp372.server.models.Point;
 
+/**
+ * Filters to shapes that only have shared points
+ * @author Vaughan Hilts
+ *
+ */
 public class PointFilter implements ShapeFilter {
 
 	@Override

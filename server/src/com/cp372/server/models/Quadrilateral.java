@@ -3,6 +3,11 @@ package com.cp372.server.models;
 import java.util.EnumSet;
 import java.util.List;
 
+/**
+ * A Quad shape with 4 points
+ * @author Vaughan Hilts
+ *
+ */
 public class Quadrilateral extends Shape {
 
 	private EnumSet<QuadProperty> _properties = EnumSet

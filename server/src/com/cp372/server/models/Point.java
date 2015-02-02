@@ -5,7 +5,7 @@ package com.cp372.server.models;
  * space. Contains simple methods to get the cordinates. This object is
  * immutable.
  * 
- * @author Vaughan Hilts & Brandon Smith
+ * @author Vaughan Hilts, Brandon Smith
  * 
  */
 public class Point {

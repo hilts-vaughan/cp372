@@ -2,6 +2,12 @@ package com.cp372.server.models;
 
 import java.util.List;
 
+/**
+ * An abstract collection of points that represent a shape in their totality. 
+ * 
+ * @author Vaughan Hilts
+ *
+ */
 public abstract class Shape {
 
 	// A list of vertices mapped in memory

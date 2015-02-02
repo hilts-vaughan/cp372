@@ -5,6 +5,12 @@ import java.util.List;
 
 import com.cp372.server.models.Shape;
 
+/**
+ * A basic storage singelton for managing shapes and their data.
+ * 
+ * @author Vaughan Hilts
+ *
+ */
 public class ShapeStorage {
 	private static ShapeStorage instance = null;
 

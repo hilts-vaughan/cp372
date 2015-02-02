@@ -3,6 +3,11 @@ package com.cp372.server.models;
 import java.util.List;
 import java.util.EnumSet;
 
+/**
+ * A triangle shape with 3 points
+ * @author Vaughan Hilts
+ *
+ */
 public class Triangle extends Shape {
 
 	private EnumSet<TriangleProperty> _properties = EnumSet

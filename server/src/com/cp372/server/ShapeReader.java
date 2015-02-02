@@ -83,7 +83,7 @@ public class ShapeReader {
 						points.add(new Point(x, y));
 					}
 
-					_pointFilter.filter(results, points);
+					results = _pointFilter.filter(results, points);
 				} catch (Exception exception) {
 					throw new BadRequestException(
 							"The points provided to the SHARES header is malformed or incorrect.");
@@ -100,7 +100,7 @@ public class ShapeReader {
 						properties.add(piece);
 					}
 
-					_propertyFilter.filter(results, properties);
+					results = _propertyFilter.filter(results, properties);
 				} catch (Exception exception) {
 					throw new BadRequestException(
 							"The properties provided to the TYPE header are not valid.");

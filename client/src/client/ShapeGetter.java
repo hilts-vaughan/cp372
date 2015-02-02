@@ -218,7 +218,9 @@ public class ShapeGetter {
 			String response = null;
 			try {
 				response = is.readUTF();
-				System.out.println(response);
+				
+				displayError("This isn't an error; but I thought you might like to know your POST went okay.");
+				
 			} catch (IOException e) {
 				System.out.println("Opps");
 				shapeConnectionSocket = null;

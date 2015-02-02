@@ -22,8 +22,7 @@ public class PropertyFilter implements ShapeFilter {
 		List<String> shares = (ArrayList<String>) context;
 
 		// Filter out those that don't chare points
-		for (ShapeEntry entry : shapes) {
-			
+		for (ShapeEntry entry : shapes) {			
 			String p = entry.getShape().getPackedProperties();
 			String[] properties = p.split(",");
 			

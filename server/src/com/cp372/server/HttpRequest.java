@@ -7,11 +7,14 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import com.cp372.server.exceptions.BadRequestException;
 import com.cp372.server.exceptions.IllegalRequestException;
+import com.cp372.server.models.Point;
+import com.cp372.server.models.Shape;
 
 final class HttpRequest implements Runnable {
 	final static String CRLF = "\r\n";
@@ -72,18 +75,25 @@ final class HttpRequest implements Runnable {
 
 				String response = "200 OK ";
 
-				// Generate a query string for each shape
-				for (ShapeEntry entry : shapes) {
-					String packedString = entry.getShape().getPackedString();
-					int count = entry.getCount();
-					packedString += ":" + count;
-					response += packedString;
-					response += "&";
-				}
+				if (shapes != null) {
 
-				// Trim if required
-				if (response.length() > 0)
-					response = response.substring(0, response.length() - 1);
+					// Generate a query string for each shape
+					for (ShapeEntry entry : shapes) {
+						String packedString = entry.getShape()
+								.getPackedString();
+						int count = entry.getCount();
+						packedString += ":" + count;
+						response += packedString;
+						response += "&";
+					}
+
+					// Trim if required
+					if (response.length() > 0)
+						response = response.substring(0, response.length() - 1);
+				} else {
+					// It was a POST
+					response += "\tType: " + this._t;
+				}
 
 				System.out.println(response);
 
@@ -105,8 +115,10 @@ final class HttpRequest implements Runnable {
 		socket.close();
 	}
 
+	private String _t = "";
+
 	private Iterable<ShapeEntry> parseRequest(String requestLine)
-			throws Exception {
+			throws BadRequestException {
 
 		// Split into lines for reading, as the HTTP request should be
 		String lines[] = requestLine.split("\\t");
@@ -151,14 +163,46 @@ final class HttpRequest implements Runnable {
 			if (verb.equals("GET")) {
 				try {
 					// Return the stuff we need
-
 					return _shapeReader.processQuery(aux, parameters);
 
 				} catch (Exception e) {
-					throw e;
+					throw new BadRequestException("The request line is not valid.");
 				}
 			} else if (verb.equals("POST")) {
-				return new ArrayList<ShapeEntry>();
+				
+				int startIndex = requestLine.indexOf(aux);
+				String buffer = requestLine.substring(startIndex).trim();
+				
+				// Generate our points by using some string logic... ouch
+				List<Point> points = new ArrayList<Point>();
+
+				String[] pointPieces = buffer.split(" ");
+
+				// Convert pieces here
+				for (int i = 0; i < pointPieces.length; i += 2) {
+
+					String pointPiece = pointPieces[i];
+					String pointPiece2 = pointPieces[i + 1];
+
+					int x = Integer.parseInt(pointPiece.trim());
+					int y = Integer.parseInt(pointPiece2.trim());
+
+					points.add(new Point(x, y));
+				}
+				
+				// With our points, generate our shape and insert it
+				try {
+				Shape s = ShapeFactory.createShape(points);
+				ShapeStorage.getInstance().insertOrUpdateShape(s);			
+				}
+				
+				catch(Exception exception) {
+					throw new BadRequestException("Too few vertices were provided for the POST. 3 or 4 are required.")
+				}
+				
+				
+				this._t = points.size() == 3 ? "T" : "Q";
+				return null;
 			} else {
 				throw new BadRequestException(
 						"The shape request is malformed. Please check your syntax.");

@@ -1,6 +1,5 @@
 package com.cp372.server.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Shape {
@@ -34,19 +33,6 @@ public abstract class Shape {
 		return this._vertices.containsAll(points);
 	}
 
-	private int orientation(Point p1, Point p2, Point p) {
-		// Determinant
-		int Orin = (int) ((int) (p2.getX() - p1.getX())
-				* (p.getY() - p1.getY()) - (p.getX() - p1.getX())
-				* (p2.getY() - p1.getY()));
-
-		if (Orin > 0)
-			return -1;
-		if (Orin < 0)
-			return 1;
-
-		return 0;
-	}
 
 	public String toString() {
 		String stuff = "";

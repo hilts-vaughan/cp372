@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import com.cp372.server.exceptions.BadRequestException;
@@ -22,7 +23,6 @@ final class HttpRequest implements Runnable {
 		this.socket = socket;
 	}
 
-	// Implement the run() method of the Runnable interface.
 	public void run() {
 		while (true) {
 
@@ -32,6 +32,9 @@ final class HttpRequest implements Runnable {
 				System.out.println(e);
 				System.out
 						.println("An internal server error occured: aborting client");
+
+				// NOTE: Maybe do something else?
+
 				return;
 			}
 		}
@@ -53,13 +56,14 @@ final class HttpRequest implements Runnable {
 
 			while ((requestLine = br.readLine()).length() != 0) {
 				System.out.println("Client Request: " + requestLine);
-				
+
 				Iterable<ShapeEntry> shapes;
 
-				// Try and get some shapes; report to the user is something blows up
+				// Try and get some shapes; report to the user is something
+				// blows up
 				try {
 					shapes = parseRequest(requestLine);
-				} catch (BadRequestException exception) {					
+				} catch (BadRequestException exception) {
 					String response = "400 Bad Request\tReason: "
 							+ exception.getMessage() + CRLF;
 					os.writeUTF(response);
@@ -112,11 +116,22 @@ final class HttpRequest implements Runnable {
 
 			String methodLine = lines[0];
 			StringTokenizer tokenizer = new StringTokenizer(methodLine);
-			String verb = tokenizer.nextToken().toUpperCase();
+
+			String verb = "";
+			try {
+				verb = tokenizer.nextToken().toUpperCase();
+			} catch (NoSuchElementException exception) {
+				throw new BadRequestException(
+						"A valid verb is missing from the request.");
+			}
+
 			String aux = "";
 
 			if (tokenizer.hasMoreTokens()) {
 				aux = tokenizer.nextToken().toUpperCase();
+			} else {
+				throw new BadRequestException(
+						"The shape qualifier is missing from the request");
 			}
 
 			// Grab the parameter block
@@ -145,39 +160,13 @@ final class HttpRequest implements Runnable {
 			} else if (verb.equals("POST")) {
 				return new ArrayList<ShapeEntry>();
 			} else {
-				throw new IllegalRequestException(requestLine);
+				throw new BadRequestException(
+						"The shape request is malformed. Please check your syntax.");
 			}
 
 		} // end if
 
 		return null;
-
-		//
-		// List<String> tokens = new ArrayList<String>();
-		//
-		// while (tokenizer.hasMoreTokens()) {
-		// tokens.add(tokenizer.nextToken());
-		// }
-		//
-		// if (tokens.size() > 1) {
-		// String method = tokens.get(0);
-		// if (method.equals("GET")) {
-		// // Pass in the parameters
-		// try {
-		// return _shapeReader.processQuery(tokens.get(1),
-		// tokens.subList(2, tokens.size() - 1));
-		// } catch (Exception e) {
-		// throw e;
-		// }
-		// } else if (method.equals("POST")) {
-		// // Return some dummy data
-		// return new ArrayList<Shape>();
-		// } else {
-		// throw new IllegalRequestException(requestLine);
-		// }
-		// } else {
-		// throw new Exception("Not enough arguments provided.");
-		// }
 
 	}
 }

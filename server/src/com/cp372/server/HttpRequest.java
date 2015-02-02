@@ -150,6 +150,11 @@ final class HttpRequest implements Runnable {
 						"The shape qualifier is missing from the request");
 			}
 
+			if (tokenizer.hasMoreTokens()) {
+				throw new BadRequestException(
+						"Data followed by the shape qualifier that is not a TAB character is illegal.");
+			}
+
 			// Grab the parameter block
 			HashMap<String, String> parameters = new HashMap<String, String>();
 
@@ -203,14 +208,15 @@ final class HttpRequest implements Runnable {
 
 				} catch (Exception exception) {
 					throw new BadRequestException(
-							"Too few vertices were provided for the POST. 3 or 4 are required. Duplicate points are removed.");
+							"The vertices given could not be understood. Make sure there's an even amount and only single spaces seperating them.");
 				}
 
 				// With our points, generate our shape and insert it
 				try {
 					Shape s = ShapeFactory.createShape(points);
 					ShapeStorage.getInstance().insertOrUpdateShape(s);
-					System.out.println("A shape has been succesfully posted to the server.");
+					System.out
+							.println("A shape has been succesfully posted to the server.");
 				}
 
 				catch (BadRequestException exception) {

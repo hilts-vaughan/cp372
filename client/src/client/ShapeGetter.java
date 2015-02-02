@@ -62,8 +62,8 @@ public class ShapeGetter {
 //Set up the 4 buttons we need
 	JButton connect = new JButton("Connect");
 	JButton disconnect = new JButton("Disconnect");
-	JButton getBut = new JButton("Get");
-	JButton postBut = new JButton("post");
+	JButton getBut = new JButton("GET");
+	JButton postBut = new JButton("POST");
 //Spawn two threads dont think these were needed
 //	Thread send = new sendThread();
 	//Thread get = new getThread();
@@ -83,7 +83,7 @@ public class ShapeGetter {
 		JFrame guiFrame = new JFrame();
 		// make sure the program exits when the frame closes
 		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		guiFrame.setTitle("ShapeGetter");
+		guiFrame.setTitle("QATTP Client");
 		guiFrame.setSize(400, 700);
 		getText.setTabSize(2);
 		shapeText.setTabSize(2);

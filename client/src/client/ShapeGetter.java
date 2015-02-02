@@ -122,6 +122,8 @@ public class ShapeGetter {
 		this._infoArea.setBackground(Color.BLACK);
 		this._infoArea.setForeground(Color.WHITE);
 		this._infoArea.setFont(new Font("monospaced", Font.PLAIN, 12));
+		this._infoArea.setLineWrap(true);
+		
 
 		guiFrame.add(this._infoArea);
 

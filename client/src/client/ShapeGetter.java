@@ -229,8 +229,7 @@ public class ShapeGetter {
 			}
 
 			request.release();
-			is = null;
-			os = null;
+
 		}
 	}
 

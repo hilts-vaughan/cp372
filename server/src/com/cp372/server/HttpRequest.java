@@ -12,7 +12,6 @@ import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
 import com.cp372.server.exceptions.BadRequestException;
-import com.cp372.server.exceptions.IllegalRequestException;
 import com.cp372.server.models.Point;
 import com.cp372.server.models.Shape;
 

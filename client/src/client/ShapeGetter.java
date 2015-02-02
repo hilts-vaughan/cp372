@@ -220,6 +220,11 @@ public class ShapeGetter {
 		JOptionPane.showMessageDialog(null, reason, "Error",
 				JOptionPane.ERROR_MESSAGE);
 	}
+	
+	private void displayInfo(String message) {
+		JOptionPane.showMessageDialog(null, message, "Information",
+				JOptionPane.INFORMATION_MESSAGE);
+	}
 
 	void openConnection(JTextField ipText2, JTextField portText2)
 			throws NumberFormatException, UnknownHostException, IOException {
@@ -264,7 +269,7 @@ public class ShapeGetter {
 				response = is.readUTF();
 
 				if (response.indexOf("200") > -1) {
-					displayError("This isn't an error; but I thought you might like to know your POST went okay.");
+					displayInfo("POST was  a success. Server database updated.");
 				} else {
 					this.doBadRequest(response);
 				}

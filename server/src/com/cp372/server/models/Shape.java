@@ -12,8 +12,8 @@ public abstract class Shape {
 
 		// We should sort out list of points before actually doing anything with
 		// them
-		List<Point> sorted = getSortedClockwiseVertices(vertices);
-		_vertices = sorted;
+		//List<Point> sorted = getSortedClockwiseVertices(vertices);
+		_vertices = vertices;
 	}
 
 	public void printPoints() {
@@ -48,59 +48,9 @@ public abstract class Shape {
 		return 0;
 	}
 
-	private List<Point> getSortedClockwiseVertices(List<Point> vertices) {
+	
 
-		ArrayList<Point> hull = new ArrayList<Point>();
 
-		Point vPointOnHull = vertices.get(0);
-
-		// Get leftmost
-		for (int i = 0; i < vertices.size(); i++) {
-			Point x = vertices.get(i);
-
-			if (x.getX() < vPointOnHull.getX()) {
-				vPointOnHull = x;
-			}
-
-			else if (x.getX() == vPointOnHull.getX()) {
-				if (x.getY() < vPointOnHull.getY()) {
-					vPointOnHull = x;
-				}
-			}
-
-		}
-
-		Point vEndpoint;
-
-		do {
-
-			hull.add(vPointOnHull);
-			vEndpoint = vertices.get(0);
-
-			for (int i = 1; i < vertices.size(); i++) {
-
-				if ((vPointOnHull == vEndpoint)
-						|| (orientation(vPointOnHull, vEndpoint,
-								vertices.get(i)) == -1)) {
-					vEndpoint = vertices.get(i);
-				}
-			}
-
-			vPointOnHull = vEndpoint;
-
-		} while (vEndpoint != hull.get(0));
-
-		return hull;
-	}
-
-	/**
-	 * Returns true if the shape is convex, false otherwise.
-	 */
-	public boolean isConvex() {
-
-		// TODO: Actually implement this...
-		return false;
-	}
 
 	public String toString() {
 		String stuff = "";

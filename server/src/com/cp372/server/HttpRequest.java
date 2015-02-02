@@ -199,6 +199,10 @@ final class HttpRequest implements Runnable {
 					ShapeStorage.getInstance().insertOrUpdateShape(s);
 				}
 
+				catch (BadRequestException exception) {
+					throw exception;
+				}
+
 				catch (Exception exception) {
 					throw new BadRequestException(
 							"Too few vertices were provided for the POST. 3 or 4 are required. Duplicate points are removed.");

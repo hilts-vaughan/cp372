@@ -3,7 +3,6 @@ package com.cp372.server.models;
 import java.util.EnumSet;
 import java.util.List;
 
-
 public class Quadrilateral extends Shape {
 
 	private EnumSet<QuadProperty> _properties = EnumSet
@@ -21,83 +20,101 @@ public class Quadrilateral extends Shape {
 		_properties.add(property);
 	}
 
-	private void setFlags() {
-		if(!this.hasProperty(QuadProperty.CONCAVE)){
-		Point p1 = this._vertices.get(0);
-		Point p2 = this._vertices.get(1);
-		Point p3 = this._vertices.get(2);
-		Point p4 = this._vertices.get(3);
+	/**
+	 * Sets the concave or convex property on the Quad
+	 */
+	public void setConcave(boolean concave) {
+		if(concave) {
+			_properties.add(QuadProperty.CONCAVE);		
+		}
+		else {
+			_properties.add(QuadProperty.CONVEX);
+		}
 		
-		double a = p1.distanceFrom(p2);
-		double b = p2.distanceFrom(p3);
-		double c = p3.distanceFrom(p4);
-		double d = p4.distanceFrom(p1);
+	}
 
-		double center1 = p1.distanceFrom(p3);
-		double center2 = p2.distanceFrom(p4);
+	private void setFlags() {
+		if (!this.hasProperty(QuadProperty.CONCAVE)) {
+			Point p1 = this._vertices.get(0);
+			Point p2 = this._vertices.get(1);
+			Point p3 = this._vertices.get(2);
+			Point p4 = this._vertices.get(3);
 
-		double angleA = 0;
-		double angleB = 0;
-		double angleC = 0;
-		double angleD = 0;
+			double a = p1.distanceFrom(p2);
+			double b = p2.distanceFrom(p3);
+			double c = p3.distanceFrom(p4);
+			double d = p4.distanceFrom(p1);
 
-		angleA = Math.acos((Math.pow(d, 2) + Math.pow(a, 2) - Math.pow(center2,
-				2)) / (2 * d * a));
-		angleB = Math.acos((Math.pow(a, 2) + Math.pow(b, 2) - Math.pow(center1,
-				2)) / (2 * a * b));
-		angleC = Math.acos((Math.pow(b, 2) + Math.pow(c, 2) - Math.pow(center2,
-				2)) / (2 * b * c));
-		angleD = Math.acos((Math.pow(c, 2) + Math.pow(d, 2) - Math.pow(center1,
-				2)) / (2 * c * d));
+			double center1 = p1.distanceFrom(p3);
+			double center2 = p2.distanceFrom(p4);
 
-		angleA = Math.toDegrees(angleA);
-		angleB = Math.toDegrees(angleB);
-		angleC = Math.toDegrees(angleC);
-		angleD = Math.toDegrees(angleD);
+			double angleA = 0;
+			double angleB = 0;
+			double angleC = 0;
+			double angleD = 0;
 
-		// Normalize due to floating math fail...
+			angleA = Math.acos((Math.pow(d, 2) + Math.pow(a, 2) - Math.pow(
+					center2, 2)) / (2 * d * a));
+			angleB = Math.acos((Math.pow(a, 2) + Math.pow(b, 2) - Math.pow(
+					center1, 2)) / (2 * a * b));
+			angleC = Math.acos((Math.pow(b, 2) + Math.pow(c, 2) - Math.pow(
+					center2, 2)) / (2 * b * c));
+			angleD = Math.acos((Math.pow(c, 2) + Math.pow(d, 2) - Math.pow(
+					center1, 2)) / (2 * c * d));
 
-		angleA = (int) Math.round(angleA);
-		angleB = (int) Math.round(angleB);
-		angleC = (int) Math.round(angleC);
-		angleD = (int) Math.round(angleD);
+			angleA = Math.toDegrees(angleA);
+			angleB = Math.toDegrees(angleB);
+			angleC = Math.toDegrees(angleC);
+			angleD = Math.toDegrees(angleD);
 
-		System.out.println(angleA+angleB+angleC+angleD);
-		// TODO: Implement the actual flags...
-		if(angleA+angleB+angleC+angleD==360){
-			this.addProperty(QuadProperty.CONVEX);
-		if (a == b && a == c && a == d && angleA == 90 && 90 == angleB
-				&& angleC == 90 && angleD == 90) {
-			this.addProperty(QuadProperty.SQUARE);
+			// Normalize due to floating math fail...
+
+			angleA = (int) Math.round(angleA);
+			angleB = (int) Math.round(angleB);
+			angleC = (int) Math.round(angleC);
+			angleD = (int) Math.round(angleD);
+
+			System.out.println(angleA + angleB + angleC + angleD);
+			// TODO: Implement the actual flags...
+
+			if (a == b && a == c && a == d && angleA == 90 && 90 == angleB
+					&& angleC == 90 && angleD == 90) {
+				this.addProperty(QuadProperty.SQUARE);
+			}
+			if (a == c && b == d && angleA == 90 & angleB == 90 && angleA == 90
+					&& 90 == angleB && angleC == 90 && angleD == 90) {
+				this.addProperty(QuadProperty.RECTANGLE);
+			}
+			if (a == c && b == d && angleA == angleC & angleB == angleD) {
+				this.addProperty(QuadProperty.PARALLELOGRAM);
+			}
+			if (a == c && b == d && a == d && angleA == angleC
+					& angleB == angleD) {
+				this.addProperty(QuadProperty.RHOMBUS);
+			}
+
+			if ((angleA + angleB == 180 && angleC + angleD == 180)
+					|| (angleB + angleC == 180 && angleD + angleA == 180)) {
+				this.addProperty(QuadProperty.TRAPEZOID);
+			}
 		}
-		if (a == c && b == d && angleA == 90 & angleB == 90 && angleA == 90
-				&& 90 == angleB && angleC == 90 && angleD == 90) {
-			this.addProperty(QuadProperty.RECTANGLE);
-		}
-		if (a == c && b == d && angleA == angleC & angleB == angleD) {
-			this.addProperty(QuadProperty.PARALLELOGRAM);
-		}
-		if (a == c && b == d && a == d && angleA == angleC & angleB == angleD) {
-			this.addProperty(QuadProperty.RHOMBUS);
-		}
 
-		if ((angleA + angleB == 180 && angleC + angleD == 180)
-				|| (angleB + angleC == 180 && angleD + angleA == 180)) {
-			this.addProperty(QuadProperty.TRAPEZOID);
-		}
-		}
-		}
 		System.out.println(this._properties);
 		System.out.println("-----------");
-		
+
 	}
 
 	public Quadrilateral(List<Point> vertices) {
 		super(vertices);
-
 		setFlags();
 	}
 
+	public Quadrilateral(List<Point> vertices, boolean concave) {
+		super(vertices);
+		this.setConcave(concave);		
+		setFlags();
+	}
+	
 	@Override
 	public String getPackedProperties() {
 

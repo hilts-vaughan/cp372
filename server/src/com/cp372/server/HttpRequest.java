@@ -31,12 +31,11 @@ final class HttpRequest implements Runnable {
 
 			try {
 				processRequest();
-			} 
-			catch(SocketException socketException) {
-				System.out.println("A client has forcefully terminated their connection. Closing thread.");
+			} catch (SocketException socketException) {
+				System.out
+						.println("A client has forcefully terminated their connection. Closing thread.");
 				return;
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				System.out.println(e);
 				System.out
 						.println("An internal server error occured: aborting client");
@@ -179,24 +178,32 @@ final class HttpRequest implements Runnable {
 
 			} else if (verb.equals("POST")) {
 
-				int startIndex = requestLine.indexOf(aux);
-				String buffer = requestLine.substring(startIndex).trim();
+				List<Point> points;
 
-				// Generate our points by using some string logic... ouch
-				List<Point> points = new ArrayList<Point>();
+				try {
+					int startIndex = requestLine.indexOf(aux);
+					String buffer = requestLine.substring(startIndex).trim();
 
-				String[] pointPieces = buffer.split(" ");
+					// Generate our points by using some string logic... ouch
+					points = new ArrayList<Point>();
 
-				// Convert pieces here
-				for (int i = 0; i < pointPieces.length; i += 2) {
+					String[] pointPieces = buffer.split(" ");
 
-					String pointPiece = pointPieces[i].trim();
-					String pointPiece2 = pointPieces[i + 1].trim();
+					// Convert pieces here
+					for (int i = 0; i < pointPieces.length; i += 2) {
 
-					int x = Integer.parseInt(pointPiece.trim());
-					int y = Integer.parseInt(pointPiece2.trim());
+						String pointPiece = pointPieces[i].trim();
+						String pointPiece2 = pointPieces[i + 1].trim();
 
-					points.add(new Point(x, y));
+						int x = Integer.parseInt(pointPiece.trim());
+						int y = Integer.parseInt(pointPiece2.trim());
+
+						points.add(new Point(x, y));
+					}
+
+				} catch (Exception exception) {
+					throw new BadRequestException(
+							"Too few vertices were provided for the POST. 3 or 4 are required. Duplicate points are removed.");
 				}
 
 				// With our points, generate our shape and insert it

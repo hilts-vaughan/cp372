@@ -41,12 +41,11 @@ public class ShapeGetter {
 
 	final String ENDLINE = "\r\n";
 
-	final JTextArea getText = new JTextArea(1,20);
+	final JTextArea getText = new JTextArea(1, 20);
 	final JTextField ipText = new JTextField(20);
 	final JTextField portText = new JTextField(7);
-	final JTextArea shapeText = new JTextArea(1,20);
-	
-	
+	final JTextArea shapeText = new JTextArea(1, 20);
+
 	@SuppressWarnings("rawtypes")
 	private final JList displayList;
 	private final ArrayList<Shape> _shapes = new ArrayList<Shape>();
@@ -65,7 +64,7 @@ public class ShapeGetter {
 	}
 
 	public ShapeGetter() {
-		
+
 		this.displayList = new JList<Shape>();
 		// this._shapes.
 		JScrollPane listScrollPane = new JScrollPane(displayList,
@@ -79,14 +78,16 @@ public class ShapeGetter {
 		guiFrame.setSize(400, 700);
 		getText.setTabSize(2);
 		shapeText.setTabSize(2);
-		JScrollPane getScrollPane = new JScrollPane(getText,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane getScrollPane = new JScrollPane(getText,
+				JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		getText.setLineWrap(false);
 		// guiFrame.add(grid);
-		JScrollPane shapeScrollPane = new JScrollPane(shapeText,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane shapeScrollPane = new JScrollPane(shapeText,
+				JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		shapeText.setLineWrap(false);
-		
-		
-		
+
 		JLabel ipLbl = new JLabel("Host:");
 		JLabel portLbl = new JLabel("Port:");
 
@@ -123,7 +124,6 @@ public class ShapeGetter {
 		this._infoArea.setForeground(Color.WHITE);
 		this._infoArea.setFont(new Font("monospaced", Font.PLAIN, 12));
 		this._infoArea.setLineWrap(true);
-		
 
 		guiFrame.add(this._infoArea);
 
@@ -157,7 +157,7 @@ public class ShapeGetter {
 			}
 
 		});
-		
+
 		disconnect.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
@@ -168,8 +168,6 @@ public class ShapeGetter {
 					displayError("The connection to the server was refused. Are your settings correct?");
 				}
 			}
-
-			
 
 		});
 
@@ -230,17 +228,18 @@ public class ShapeGetter {
 		os = new PrintStream(shapeConnectionSocket.getOutputStream());
 		is = new DataInputStream(shapeConnectionSocket.getInputStream());
 	}
-	void closeConnection() 
-			throws NumberFormatException, UnknownHostException, IOException {
-		if(shapeConnectionSocket!=null){
-		shapeConnectionSocket.close();
-		os.close();
-		is.close();
-		shapeConnectionSocket = null;
-		is = null;
-		os = null;
+
+	void closeConnection() throws NumberFormatException, UnknownHostException,
+			IOException {
+		if (shapeConnectionSocket != null) {
+			shapeConnectionSocket.close();
+			os.close();
+			is.close();
+			shapeConnectionSocket = null;
+			is = null;
+			os = null;
 		}
-		
+
 	}
 
 	public class sendThread extends Thread {
@@ -265,8 +264,8 @@ public class ShapeGetter {
 			}
 
 			catch (IOException e) {
-			
-				//clean up if forced
+
+				// clean up if forced
 				shapeConnectionSocket = null;
 				is = null;
 				os = null;

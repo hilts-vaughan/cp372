@@ -96,7 +96,7 @@ public class Quadrilateral extends Shape {
 	}
 
 	@Override
-	protected String getPackedProperties() {
+	public String getPackedProperties() {
 
 		String packed = "";
 

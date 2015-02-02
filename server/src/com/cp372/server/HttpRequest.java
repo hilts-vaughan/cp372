@@ -4,14 +4,12 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import com.cp372.server.exceptions.IllegalRequestException;
-import com.cp372.server.models.Shape;
 
 final class HttpRequest implements Runnable {
 	final static String CRLF = "\r\n";

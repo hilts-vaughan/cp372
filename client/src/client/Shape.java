@@ -37,9 +37,8 @@ public class Shape {
 	
 
 	public String toString() {
-		String name = getType();
 		
-		return name + " with points " + this._vertices.toString() + "";
+		return getType() + " with points " + this._vertices.toString() + "";
 	}
 
 

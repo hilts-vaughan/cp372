@@ -112,7 +112,7 @@ public class Triangle extends Shape {
 	}
 
 	@Override
-	protected String getPackedProperties() {
+	public String getPackedProperties() {
 
 		String packed = "";
 		

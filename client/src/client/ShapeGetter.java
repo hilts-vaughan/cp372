@@ -163,7 +163,7 @@ public class ShapeGetter {
 			public void actionPerformed(ActionEvent event) {
 
 				try {
-					closeConnection();
+					closeConnection1();
 				} catch (Exception e) {
 					displayError("The connection to the server was refused. Are your settings correct?");
 				}
@@ -247,16 +247,6 @@ public class ShapeGetter {
 
 	}
 
-	void closeConnection() throws NumberFormatException, UnknownHostException,
-			IOException {
-		if (shapeConnectionSocket != null) {
-			shapeConnectionSocket.close();
-			os.close();
-			is.close();
-			shapeConnectionSocket = null;
-			is = null;
-			os = null;
-		}
 
 	}
 

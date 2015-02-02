@@ -164,9 +164,13 @@ final class HttpRequest implements Runnable {
 					// Return the stuff we need
 					return _shapeReader.processQuery(aux, parameters);
 
-				} catch (Exception e) {
-					throw new BadRequestException("The request line is not valid.");
+				} catch (BadRequestException e) {
+					throw e;
 				}
+				catch(Exception e) {
+					throw new BadRequestException("The request failed for an unknown reason.");
+				}
+				
 			} else if (verb.equals("POST")) {
 				
 				int startIndex = requestLine.indexOf(aux);

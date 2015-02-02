@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+import com.cp372.server.exceptions.BadRequestException;
 import com.cp372.server.exceptions.IllegalRequestException;
 
 final class HttpRequest implements Runnable {
@@ -29,7 +30,8 @@ final class HttpRequest implements Runnable {
 				processRequest();
 			} catch (Exception e) {
 				System.out.println(e);
-				System.out.println("An internal server error occured: aborting client");												
+				System.out
+						.println("An internal server error occured: aborting client");
 				return;
 			}
 		}
@@ -51,9 +53,18 @@ final class HttpRequest implements Runnable {
 
 			while ((requestLine = br.readLine()).length() != 0) {
 				System.out.println("Client Request: " + requestLine);
+				
+				Iterable<ShapeEntry> shapes;
 
-				// Get some shape responses via the the parser
-				Iterable<ShapeEntry> shapes = parseRequest(requestLine);
+				// Try and get some shapes; report to the user is something blows up
+				try {
+					shapes = parseRequest(requestLine);
+				} catch (BadRequestException exception) {					
+					String response = "400 Bad Request\tReason: "
+							+ exception.getMessage() + CRLF;
+					os.writeUTF(response);
+					continue;
+				}
 
 				String response = "200 OK ";
 

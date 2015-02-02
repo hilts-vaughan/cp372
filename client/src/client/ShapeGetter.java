@@ -42,8 +42,8 @@ public class ShapeGetter {
 	final String ENDLINE = "\r\n";
 
 	final JTextArea getText = new JTextArea(1,20);
-	final JTextArea ipText = new JTextArea(1,20);
-	final JTextArea portText = new JTextArea(1,10);
+	final JTextField ipText = new JTextField(20);
+	final JTextField portText = new JTextField(10);
 	final JTextArea shapeText = new JTextArea(1,20);
 	
 	
@@ -84,10 +84,6 @@ public class ShapeGetter {
 		JScrollPane shapeScrollPane = new JScrollPane(shapeText,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		shapeText.setLineWrap(false);
 		
-		JScrollPane hostScrollPane = new JScrollPane(ipText,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		ipText.setLineWrap(false);
-		JScrollPane portScrollPane = new JScrollPane(portText,JScrollPane.VERTICAL_SCROLLBAR_NEVER,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		portText.setLineWrap(false);
 		
 		
 		JLabel ipLbl = new JLabel("Host:");
@@ -97,11 +93,11 @@ public class ShapeGetter {
 
 		final JPanel ipPanel = new JPanel();
 		ipPanel.add(ipLbl);
-		ipPanel.add(hostScrollPane);
+		ipPanel.add(ipText);
 		guiFrame.add(ipPanel);
 		final JPanel portPanel = new JPanel();
 		portPanel.add(portLbl);
-		portPanel.add(portScrollPane);
+		portPanel.add(portText);
 		portPanel.add(connect);
 		final JPanel buttonPanel = new JPanel();
 		buttonPanel.add(portPanel);
@@ -208,7 +204,7 @@ public class ShapeGetter {
 				JOptionPane.ERROR_MESSAGE);
 	}
 
-	void openConnection(JTextArea ipText2, JTextArea portText2)
+	void openConnection(JTextField ipText2, JTextField portText2)
 			throws NumberFormatException, UnknownHostException, IOException {
 		System.out.println(ipText2.getText());
 		System.out.println(Integer.parseInt(portText2.getText()));

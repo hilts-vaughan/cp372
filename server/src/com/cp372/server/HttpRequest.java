@@ -197,7 +197,7 @@ final class HttpRequest implements Runnable {
 				}
 				
 				catch(Exception exception) {
-					throw new BadRequestException("Too few vertices were provided for the POST. 3 or 4 are required.")
+					throw new BadRequestException("Too few vertices were provided for the POST. 3 or 4 are required.");
 				}
 				
 				

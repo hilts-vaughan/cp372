@@ -22,8 +22,9 @@ public interface ShapeFilter {
 	 *            A data object decided by the implemented class that is used as
 	 *            context for the filtering.
 	 * @return
-	 * @throws BadRequestException 
+	 * @throws BadRequestException
 	 */
-	public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes, Object context) throws BadRequestException;
+	public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes,
+			Object context) throws BadRequestException;
 
 }

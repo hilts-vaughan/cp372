@@ -220,7 +220,7 @@ public class ShapeGetter {
 		JOptionPane.showMessageDialog(null, reason, "Error",
 				JOptionPane.ERROR_MESSAGE);
 	}
-	
+
 	private void displayInfo(String message) {
 		JOptionPane.showMessageDialog(null, message, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
@@ -228,30 +228,29 @@ public class ShapeGetter {
 
 	void openConnection(JTextField ipText2, JTextField portText2)
 			throws NumberFormatException, UnknownHostException, IOException {
-		if(shapeConnectionSocket==null){
-		shapeConnectionSocket = new Socket(ipText2.getText(),
-				Integer.parseInt(portText2.getText()));
-		os = new PrintStream(shapeConnectionSocket.getOutputStream());
-		is = new DataInputStream(shapeConnectionSocket.getInputStream());
-		}
-		else {
+		if (shapeConnectionSocket == null) {
+			shapeConnectionSocket = new Socket(ipText2.getText(),
+					Integer.parseInt(portText2.getText()));
+			os = new PrintStream(shapeConnectionSocket.getOutputStream());
+			is = new DataInputStream(shapeConnectionSocket.getInputStream());
+		} else {
 			displayError("You already Have a connection \nPlease disconnect first.");
 		}
-		}
-	void closeConnection() 
-			throws NumberFormatException, UnknownHostException, IOException {
-		if(shapeConnectionSocket!=null){
-		shapeConnectionSocket.close();
-		os.close();
-		is.close();
-		shapeConnectionSocket = null;
-		is = null;
-		os = null;
-		}else {
-			displayError("There is currently no connection.");
-
 	}
 
+	void closeConnection() throws NumberFormatException, UnknownHostException,
+			IOException {
+		if (shapeConnectionSocket != null) {
+			shapeConnectionSocket.close();
+			os.close();
+			is.close();
+			shapeConnectionSocket = null;
+			is = null;
+			os = null;
+		} else {
+			displayError("There is currently no connection.");
+
+		}
 
 	}
 

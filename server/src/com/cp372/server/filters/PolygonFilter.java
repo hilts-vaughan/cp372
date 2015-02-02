@@ -9,8 +9,9 @@ import com.cp372.server.models.Quadrilateral;
 import com.cp372.server.models.Triangle;
 
 /**
- * Filters by a given instance type given a string for the type.
- * Allows filtering by specific groups of shapes.
+ * Filters by a given instance type given a string for the type. Allows
+ * filtering by specific groups of shapes.
+ * 
  * @author Vaughan Hilts
  *
  */
@@ -42,7 +43,8 @@ public class PolygonFilter implements ShapeFilter {
 				results.add(entry);
 				break;
 			default:
-				throw new BadRequestException("The provided shape qualifier is illegal");
+				throw new BadRequestException(
+						"The provided shape qualifier is illegal");
 			}
 		}
 

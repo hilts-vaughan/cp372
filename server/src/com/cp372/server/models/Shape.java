@@ -12,7 +12,7 @@ public abstract class Shape {
 
 		// We should sort out list of points before actually doing anything with
 		// them
-		//List<Point> sorted = getSortedClockwiseVertices(vertices);
+		// List<Point> sorted = getSortedClockwiseVertices(vertices);
 		_vertices = vertices;
 	}
 
@@ -47,10 +47,6 @@ public abstract class Shape {
 
 		return 0;
 	}
-
-	
-
-
 
 	public String toString() {
 		String stuff = "";

@@ -7,38 +7,40 @@ import com.cp372.server.ShapeEntry;
 
 /**
  * Filters on enumeration types against the different shapes
+ * 
  * @author Vaughan Hilts
  *
  */
 public class PropertyFilter implements ShapeFilter {
-	
+
 	@Override
-	public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes, Object context) {
-		//TODO: Apply some filtering logic
-		
+	public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes,
+			Object context) {
+		// TODO: Apply some filtering logic
+
 		List<ShapeEntry> results = new ArrayList<ShapeEntry>();
-		
+
 		@SuppressWarnings("unchecked")
 		List<String> shares = (ArrayList<String>) context;
 
 		// Filter out those that don't chare points
-		for (ShapeEntry entry : shapes) {			
+		for (ShapeEntry entry : shapes) {
 			String p = entry.getShape().getPackedProperties();
 			String[] properties = p.split(",");
-			
+
 			// Grab a list so we can use containsAll
 			List<String> listProperties = new ArrayList<String>();
-			for(String s : properties) {
+			for (String s : properties) {
 				listProperties.add(s);
 			}
-			
+
 			if (listProperties.containsAll(shares)) {
 				results.add(entry);
 			}
 		}
 
 		return results;
-		
+
 	}
 
 }

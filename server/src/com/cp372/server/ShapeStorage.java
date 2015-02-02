@@ -24,7 +24,7 @@ public class ShapeStorage {
 	public Iterable<ShapeEntry> getShapes() {
 		return _shapes;
 	}
-	
+
 	/**
 	 * Given a shape and a number of occurences, finds a shape that has occured
 	 * that many times exactly.

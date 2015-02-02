@@ -24,13 +24,12 @@ public class Quadrilateral extends Shape {
 	 * Sets the concave or convex property on the Quad
 	 */
 	public void setConcave(boolean concave) {
-		if(concave) {
-			_properties.add(QuadProperty.CONCAVE);		
-		}
-		else {
+		if (concave) {
+			_properties.add(QuadProperty.CONCAVE);
+		} else {
 			_properties.add(QuadProperty.CONVEX);
 		}
-		
+
 	}
 
 	private void setFlags() {
@@ -111,10 +110,10 @@ public class Quadrilateral extends Shape {
 
 	public Quadrilateral(List<Point> vertices, boolean concave) {
 		super(vertices);
-		this.setConcave(concave);		
+		this.setConcave(concave);
 		setFlags();
 	}
-	
+
 	@Override
 	public String getPackedProperties() {
 

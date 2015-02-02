@@ -15,9 +15,8 @@ public class Point {
 
 	public Point(int x, int y) {
 		this.x = x;
-		this.y =  y;
+		this.y = y;
 	}
-
 
 	public int getX() {
 		return x;
@@ -31,36 +30,38 @@ public class Point {
 	public String toString() {
 		return ("(" + x + "," + y + ")");
 	}
-	
+
 	@Override
 	public boolean equals(Object other) {
-		
+
 		Point otherPoint = (Point) other;
-		
-		if(otherPoint == null)
+
+		if (otherPoint == null)
 			return false;
-		
-		if(otherPoint.x == this.x && otherPoint.y == this.y)
+
+		if (otherPoint.x == this.x && otherPoint.y == this.y)
 			return true;
 		else
 			return false;
 	}
-	
+
 	/**
 	 * Computes the distance between this point and another point.
-	 * @param point	The other point to compare to
-	 * @return	The distance between the two points
+	 * 
+	 * @param point
+	 *            The other point to compare to
+	 * @return The distance between the two points
 	 */
 	public double distanceFrom(Point point) {
-		
+
 		double a = (this.getX() - point.getX());
 		a = Math.pow(a, 2);
-		
+
 		double b = (this.getY() - point.getY());
-		b = Math.pow(b,  2);
-		
+		b = Math.pow(b, 2);
+
 		return Math.sqrt(a + b);
-		
+
 	}
 
 }

@@ -115,13 +115,13 @@ public class Triangle extends Shape {
 	public String getPackedProperties() {
 
 		String packed = "";
-		
-		for(TriangleProperty property : this._properties) {
+
+		for (TriangleProperty property : this._properties) {
 			packed += property.toString() + ",";
 		}
-		
+
 		packed = packed.substring(0, packed.length() - 1);
-		
+
 		return packed;
 	}
 

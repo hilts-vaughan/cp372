@@ -166,16 +166,16 @@ final class HttpRequest implements Runnable {
 
 				} catch (BadRequestException e) {
 					throw e;
+				} catch (Exception e) {
+					throw new BadRequestException(
+							"The request failed for an unknown reason.");
 				}
-				catch(Exception e) {
-					throw new BadRequestException("The request failed for an unknown reason.");
-				}
-				
+
 			} else if (verb.equals("POST")) {
-				
+
 				int startIndex = requestLine.indexOf(aux);
 				String buffer = requestLine.substring(startIndex).trim();
-				
+
 				// Generate our points by using some string logic... ouch
 				List<Point> points = new ArrayList<Point>();
 
@@ -192,18 +192,18 @@ final class HttpRequest implements Runnable {
 
 					points.add(new Point(x, y));
 				}
-				
+
 				// With our points, generate our shape and insert it
 				try {
-				Shape s = ShapeFactory.createShape(points);
-				ShapeStorage.getInstance().insertOrUpdateShape(s);			
+					Shape s = ShapeFactory.createShape(points);
+					ShapeStorage.getInstance().insertOrUpdateShape(s);
 				}
-				
-				catch(Exception exception) {
-					throw new BadRequestException("Too few vertices were provided for the POST. 3 or 4 are required.");
+
+				catch (Exception exception) {
+					throw new BadRequestException(
+							"Too few vertices were provided for the POST. 3 or 4 are required. Duplicate points are removed.");
 				}
-				
-				
+
 				this._t = points.size() == 3 ? "T" : "Q";
 				return null;
 			} else {

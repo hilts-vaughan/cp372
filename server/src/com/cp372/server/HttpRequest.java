@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +31,12 @@ final class HttpRequest implements Runnable {
 
 			try {
 				processRequest();
-			} catch (Exception e) {
+			} 
+			catch(SocketException socketException) {
+				System.out.println("A client has forcefully terminated their connection. Closing thread.");
+				return;
+			}
+			catch (Exception e) {
 				System.out.println(e);
 				System.out
 						.println("An internal server error occured: aborting client");

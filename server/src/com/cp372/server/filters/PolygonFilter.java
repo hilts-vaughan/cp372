@@ -40,6 +40,7 @@ public class PolygonFilter implements ShapeFilter {
 				break;
 			case SHAPE_TYPE_BOTH: // otherwise, it's both so allow that
 				results.add(entry);
+				break;
 			default:
 				throw new BadRequestException("The provided shape qualifier is illegal");
 			}

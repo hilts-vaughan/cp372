@@ -17,7 +17,7 @@ public class PointFilter implements ShapeFilter {
 		@SuppressWarnings("unchecked")
 		List<Point> shares = (ArrayList<Point>) context;
 
-		// Filter out those that don't chare points
+		// Filter out those that don't share points
 		for (ShapeEntry entry : shapes) {
 			if (entry.getShape().hasPoints(shares)) {
 				results.add(entry);

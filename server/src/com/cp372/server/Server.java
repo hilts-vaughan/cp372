@@ -35,18 +35,19 @@ public final class Server {
 		points2.add(new Point(3, 4));					
 				
 		
-		Shape s = ShapeFactory.createShape(points);
+		Shape s = null;
+		//= ShapeFactory.createShape(points);
 		//s.printPoints();
-		ShapeStorage.getInstance().insertOrUpdateShape(s);
+		//ShapeStorage.getInstance().insertOrUpdateShape(s);
 
 		points.clear();
 		points.add(new Point(1, 2));
 		points.add(new Point(2, 3));
 		points.add(new Point(3, 2));		
 		points.add(new Point(1, 1));
-		s = ShapeFactory.createShape(points);
+		//s = ShapeFactory.createShape(points);
 		//s.printPoints();
-		ShapeStorage.getInstance().insertOrUpdateShape(s);
+		//ShapeStorage.getInstance().insertOrUpdateShape(s);
 
 		points.clear();
 		points.add(new Point(4, 2));
@@ -54,24 +55,24 @@ public final class Server {
 		points.add(new Point(2, 2));		
 		points.add(new Point(1, 1));
 		
-		s = ShapeFactory.createShape(points);
+		//s = ShapeFactory.createShape(points);
 		//s.printPoints();
-		ShapeStorage.getInstance().insertOrUpdateShape(s);
+		//ShapeStorage.getInstance().insertOrUpdateShape(s);
 
 		points.clear();
 		points.add(new Point(6, 2));
 		points.add(new Point(2, 3));
 		points.add(new Point(3, 3));		
 		points.add(new Point(1, 2));
-		s = ShapeFactory.createShape(points);
+		//s = ShapeFactory.createShape(points);
 		//s.printPoints();
-		ShapeStorage.getInstance().insertOrUpdateShape(s);
+		//ShapeStorage.getInstance().insertOrUpdateShape(s);
 
 		
 		points.clear();
-		points.add(new Point(0, 5));
+		points.add(new Point(0, 4));
 		points.add(new Point(0, 0));
-		points.add(new Point(4, 1));		
+		points.add(new Point(4, 0));		
 		s = ShapeFactory.createShape(points);
 		s.printPoints();
 	
@@ -81,13 +82,13 @@ public final class Server {
 		points.add(new Point(2, 3));
 		points.add(new Point(9, 2));		
 		points.add(new Point(1, 1));
-		s = ShapeFactory.createShape(points);
+		//s = ShapeFactory.createShape(points);
 		//s.printPoints();
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
 	
 
-		ShapeStorage.getInstance().insertOrUpdateShape(s);
-		ShapeStorage.getInstance().insertOrUpdateShape(s);
+		//ShapeStorage.getInstance().insertOrUpdateShape(s);
+		//ShapeStorage.getInstance().insertOrUpdateShape(s);
 		Iterable<Shape> shapes = ShapeStorage.getInstance().getShapeByOccurence(s, 2);
 
 		points.clear();
@@ -96,6 +97,7 @@ public final class Server {
 		points.add(new Point(2, 5));		
 		points.add(new Point(4, 5));
 		s = ShapeFactory.createShape(points);
+		s.printPoints();
 		
 		
 		

@@ -17,7 +17,7 @@ public class Shape {
 		String[] sequences = packedShapeString.split(":");
 		
 		String[] pointPieces = sequences[0].split(",");
-		
+		if(pointPieces.length>1){
 		// Convert pieces here
 		for(int i = 0; i < pointPieces.length; i+= 2) {
 			
@@ -32,29 +32,43 @@ public class Shape {
 		
 		this._properties = sequences[1];
 		this._count = Integer.parseInt(sequences[2].replace("\r", "").replace("\n", ""));
+		}
 		
+		
+	
 	}
 	
 
 	public String toString() {
-		String name = getType();
 		
-		return name + " with points " + this._vertices.toString() + "";
+		
+		String name = getType();
+		String value = "no values";
+		if(name!=null){
+		value =name + " with points " + this._vertices.toString() + "";
+		}
+		return value;
 	}
 
 
 	private String getType() {
 		int vertexCount = this._vertices.size();
 		String name = vertexCount == 3 ? "Triangle" : "Quadrilateral";
+		if (vertexCount==0){
+			name=null;
+		}
 		return name;
 	}
 	
 	public String getInfo() {
-		String info = "Type: " + getType() + "\n";
+		String info="Sorry there are no points of that type";
+	
+		if(getType()!=null){
+		info = "Type: " + getType() + "\n";
 		info += "Occurences: " + _count + "\n";
 		info += "Properties: " + _properties + "\n";
 		info += "Points: " + _vertices;
-		
+		}
 		return info;
 	}
 	

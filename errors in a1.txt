@@ -1,0 +1,4 @@
+Need to get thing out of eclipse
+
+Get blank returns quads
+Typeing T stops client side from doing anything (crashes in the shapes section)

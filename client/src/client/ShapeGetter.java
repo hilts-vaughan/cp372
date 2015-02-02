@@ -56,7 +56,7 @@ public class ShapeGetter {
 	JButton connect = new JButton("Connect");
 	JButton disconnect = new JButton("Disconnect");
 	JButton getBut = new JButton("Get");
-	JButton sendBut = new JButton("Send");
+	JButton postBut = new JButton("post");
 	Thread send = new sendThread();
 	Thread get = new getThread();
 
@@ -112,7 +112,7 @@ public class ShapeGetter {
 		guiFrame.add(buttonPanel);
 		guiFrame.add(getPanel);
 		final JPanel userInputPanel = new JPanel();
-		userInputPanel.add(sendBut);
+		userInputPanel.add(postBut);
 		userInputPanel.add(shapeScrollPane);
 		guiFrame.add(userInputPanel);
 
@@ -191,7 +191,7 @@ public class ShapeGetter {
 			}
 
 		});
-		sendBut.addActionListener(new ActionListener() {
+		postBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				if (os != null) {

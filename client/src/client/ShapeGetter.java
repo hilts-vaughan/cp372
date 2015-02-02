@@ -53,7 +53,8 @@ public class ShapeGetter {
 
 	private final JTextArea _infoArea = new JTextArea();
 
-	JButton connect = new JButton("Connect/Disconnect");
+	JButton connect = new JButton("Connect");
+	JButton disconnect = new JButton("Disconnect");
 	JButton getBut = new JButton("Get");
 	JButton sendBut = new JButton("Send");
 	Thread send = new sendThread();
@@ -99,6 +100,7 @@ public class ShapeGetter {
 		portPanel.add(portLbl);
 		portPanel.add(portText);
 		portPanel.add(connect);
+		portPanel.add(disconnect);
 		final JPanel buttonPanel = new JPanel();
 		buttonPanel.add(portPanel);
 
@@ -151,6 +153,21 @@ public class ShapeGetter {
 					displayError("The connection to the server was refused. Are your settings correct?");
 				}
 			}
+
+		});
+		
+		disconnect.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+
+				try {
+					closeConnection();
+				} catch (Exception e) {
+					displayError("The connection to the server was refused. Are your settings correct?");
+				}
+			}
+
+			
 
 		});
 
@@ -211,6 +228,18 @@ public class ShapeGetter {
 		os = new PrintStream(shapeConnectionSocket.getOutputStream());
 		is = new DataInputStream(shapeConnectionSocket.getInputStream());
 	}
+	void closeConnection() 
+			throws NumberFormatException, UnknownHostException, IOException {
+		if(shapeConnectionSocket!=null){
+		shapeConnectionSocket.close();
+		os.close();
+		is.close();
+		shapeConnectionSocket = null;
+		is = null;
+		os = null;
+		}
+		
+	}
 
 	public class sendThread extends Thread {
 
@@ -219,7 +248,6 @@ public class ShapeGetter {
 				request.acquire();
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
-				System.out.println("oops");
 			}
 			os.print("POST " + shapeText.getText() + ENDLINE);
 			String response = null;
@@ -235,7 +263,8 @@ public class ShapeGetter {
 			}
 
 			catch (IOException e) {
-				System.out.println("Opps");
+			
+				//clean up if forced
 				shapeConnectionSocket = null;
 				is = null;
 				os = null;

@@ -14,42 +14,40 @@ import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.Map;
 
-
-
 public class Server {
 	@SuppressWarnings("resource")
 	public static void main(String argv[]) throws Exception {
 		// Get the port number from the command line.
 
 		int port = 0;
-		
+
 		try {
 			port = Integer.parseInt(argv[0]);
-		} 
-		
-		catch(Exception exception) {
-			System.out.println("Invalid usage. Proper usage is: server <portNumber>");
+		}
+
+		catch (Exception exception) {
+			System.out
+					.println("Invalid usage. Proper usage is: server <portNumber>");
 			return;
 		}
-		
+
 		// System.out.println(sss.charAt(0));
 		// Establish the listen socket.
 		System.out.println("Preparing to launch the web server...");
 
 		ServerSocket socket;
-		
+
 		try {
 			socket = new ServerSocket(port);
-		}
-		catch(Exception exception) {
-			System.out.println("Server failed to bind on port " + port + ". Is it in use?");
+		} catch (Exception exception) {
+			System.out.println("Server failed to bind on port " + port
+					+ ". Is it in use?");
 			exception.printStackTrace();
 			return;
 		}
-		
+
 		System.out.println("Socket is now bound at localhost:" + port);
 
-		
 		while (true) {
 
 			// Listen for a TCP connection request.
@@ -68,6 +66,7 @@ public class Server {
 		// close socket if we ever manage to leave the loop
 		// socket.close();
 	}
+
 	final static class HttpRequest implements Runnable {
 		final static String CRLF = "\r\n";
 		final static ShapeReader _shapeReader = new ShapeReader();
@@ -145,13 +144,15 @@ public class Server {
 
 						// Trim if required
 						if (response.length() > 0)
-							response = response.substring(0, response.length() - 1);
+							response = response.substring(0,
+									response.length() - 1);
 					} else {
 						// It was a POST
 						response += "\tType: " + this._t;
 					}
 
-					System.out.println("Sending response to client: " + response);
+					System.out.println("Sending response to client: "
+							+ response);
 
 					// Send our response code
 					os.writeUTF(response + CRLF);
@@ -202,8 +203,6 @@ public class Server {
 							"The shape qualifier or post data is missing from the request");
 				}
 
-		
-
 				// Grab the parameter block
 				HashMap<String, String> parameters = new HashMap<String, String>();
 
@@ -219,12 +218,12 @@ public class Server {
 				}
 
 				if (verb.equals("GET")) {
-					
+
 					if (tokenizer.hasMoreTokens()) {
 						throw new BadRequestException(
 								"Data followed by the shape qualifier that is not a TAB character is illegal.");
 					}
-					
+
 					try {
 						// Return the stuff we need
 						return _shapeReader.processQuery(aux, parameters);
@@ -242,9 +241,11 @@ public class Server {
 
 					try {
 						int startIndex = requestLine.indexOf(aux);
-						String buffer = requestLine.substring(startIndex).trim();
+						String buffer = requestLine.substring(startIndex)
+								.trim();
 
-						// Generate our points by using some string logic... ouch
+						// Generate our points by using some string logic...
+						// ouch
 						points = new ArrayList<Point>();
 
 						String[] pointPieces = buffer.split(" ");
@@ -296,6 +297,7 @@ public class Server {
 
 		}
 	}
+
 	public static class ShapeEntry {
 
 		private final Shape _shape;
@@ -320,6 +322,7 @@ public class Server {
 		}
 
 	}
+
 	public static class ShapeFactory {
 
 		/**
@@ -359,7 +362,8 @@ public class Server {
 				return new Triangle(jarvisPoints);
 			} else if (points.size() == 4) {
 
-				// If we ended up here, Jarvis failed us and we're probavly concave.
+				// If we ended up here, Jarvis failed us and we're probavly
+				// concave.
 				Quadrilateral q = new Quadrilateral(jarvisPoints, concave);
 				return q;
 			} else {
@@ -373,7 +377,8 @@ public class Server {
 		 * @param points
 		 * @return
 		 */
-		private static List<Point> getPointsWithDuplicatesRemoved(List<Point> points) {
+		private static List<Point> getPointsWithDuplicatesRemoved(
+				List<Point> points) {
 			return new ArrayList<Point>(new HashSet<Point>(points));
 		}
 
@@ -385,7 +390,8 @@ public class Server {
 		 *            The set of points to be sorted
 		 * @return
 		 */
-		private static List<Point> getSortedClockwiseVertices(List<Point> vertices) {
+		private static List<Point> getSortedClockwiseVertices(
+				List<Point> vertices) {
 
 			ArrayList<Point> hull = new ArrayList<Point>();
 
@@ -444,6 +450,7 @@ public class Server {
 		}
 
 	}
+
 	public static class ShapeReader {
 
 		private PolygonFilter _polygonFilter = new PolygonFilter();
@@ -493,7 +500,8 @@ public class Server {
 
 					try {
 
-						// Generate our points by using some string logic... ouch
+						// Generate our points by using some string logic...
+						// ouch
 						List<Point> points = new ArrayList<Point>();
 
 						String[] pointPieces = entry.getValue().split(" ");
@@ -533,7 +541,8 @@ public class Server {
 								"The properties provided to the TYPE header are not valid.");
 					}
 					break;
-				default: // ignore attributes that aren't implemented; they could be
+				default: // ignore attributes that aren't implemented; they
+							// could be
 							// supported as extensions
 					break;
 				}
@@ -541,7 +550,9 @@ public class Server {
 
 			return results;
 		}
-	}public static class ShapeStorage {
+	}
+
+	public static class ShapeStorage {
 		private static ShapeStorage instance = null;
 
 		protected ShapeStorage() {
@@ -562,8 +573,8 @@ public class Server {
 		}
 
 		/**
-		 * Given a shape and a number of occurences, finds a shape that has occured
-		 * that many times exactly.
+		 * Given a shape and a number of occurences, finds a shape that has
+		 * occured that many times exactly.
 		 * 
 		 * @param shape
 		 *            The shape to search for
@@ -593,18 +604,22 @@ public class Server {
 			for (ShapeEntry entry : _shapes) {
 				if (entry.getShape().equals(shape)) {
 					entry.incrementCount();
-					System.out.println("A shape already existed; incrementing counter.");
+					System.out
+							.println("A shape already existed; incrementing counter.");
 					return;
 				}
 			}
 
-			System.out.println("A new shape was detected. Inserting into storage.");
-			
+			System.out
+					.println("A new shape was detected. Inserting into storage.");
+
 			// Otherwise, we couldn't find it so we'll insert
 			_shapes.add(new ShapeEntry(shape));
 		}
 
-	}public static  class BadRequestException extends Exception {
+	}
+
+	public static class BadRequestException extends Exception {
 
 		/**
 		 * Generated serial ID by the IDE
@@ -616,15 +631,16 @@ public class Server {
 		}
 
 	}
+
 	/**
-	 * A general exception that is thrown when an amount of vertices that is sent
-	 * isn't a valid one. This is generally a misbehaving client or unknown
+	 * A general exception that is thrown when an amount of vertices that is
+	 * sent isn't a valid one. This is generally a misbehaving client or unknown
 	 * behaviour.
 	 * 
 	 * @author Vaughan Hilts
 	 *
 	 */
-	public static  class InvalidVerticesException extends Exception {
+	public static class InvalidVerticesException extends Exception {
 
 		/**
 		 * 
@@ -636,6 +652,7 @@ public class Server {
 		}
 
 	}
+
 	/**
 	 * Filters by a specific amount of occurences that have occured
 	 * 
@@ -661,12 +678,15 @@ public class Server {
 			return results;
 		}
 
-	}/**
+	}
+
+	/**
 	 * Filters to shapes that only have shared points
+	 * 
 	 * @author Vaughan Hilts
 	 *
 	 */
-	public static  class PointFilter implements ShapeFilter {
+	public static class PointFilter implements ShapeFilter {
 
 		@Override
 		public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes,
@@ -688,6 +708,7 @@ public class Server {
 		}
 
 	}
+
 	/**
 	 * Filters by a given instance type given a string for the type. Allows
 	 * filtering by specific groups of shapes.
@@ -695,7 +716,7 @@ public class Server {
 	 * @author Vaughan Hilts
 	 *
 	 */
-	public static  class PolygonFilter implements ShapeFilter {
+	public static class PolygonFilter implements ShapeFilter {
 
 		private final static String SHAPE_TYPE_TRIANGLE = "T";
 		private final static String SHAPE_TYPE_QUAD = "Q";
@@ -731,13 +752,14 @@ public class Server {
 		}
 
 	}
+
 	/**
 	 * Filters on enumeration types against the different shapes
 	 * 
 	 * @author Vaughan Hilts
 	 *
 	 */
-	public static  class PropertyFilter implements ShapeFilter {
+	public static class PropertyFilter implements ShapeFilter {
 
 		@Override
 		public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes,
@@ -770,6 +792,7 @@ public class Server {
 		}
 
 	}
+
 	/**
 	 * Provides a generic interface for filters that must be implemented against
 	 * different shapes.
@@ -780,14 +803,14 @@ public class Server {
 	public interface ShapeFilter {
 
 		/**
-		 * Filters a set of shape entries using the given context. It is up to the
-		 * implementor to decide on the context of which it will be used.
+		 * Filters a set of shape entries using the given context. It is up to
+		 * the implementor to decide on the context of which it will be used.
 		 * 
 		 * @param shapes
 		 *            A simple iterable set of shapes that can be filtered.
 		 * @param context
-		 *            A data object decided by the implemented class that is used as
-		 *            context for the filtering.
+		 *            A data object decided by the implemented class that is
+		 *            used as context for the filtering.
 		 * @return
 		 * @throws BadRequestException
 		 */
@@ -795,6 +818,7 @@ public class Server {
 				Object context) throws BadRequestException;
 
 	}
+
 	/**
 	 * A basic 2D point that allows the representation of a single vertex in 2D
 	 * space. Contains simple methods to get the cordinates. This object is
@@ -860,8 +884,10 @@ public class Server {
 		}
 
 	}
+
 	/**
 	 * A Quad shape with 4 points
+	 * 
 	 * @author Vaughan Hilts
 	 *
 	 */
@@ -941,8 +967,9 @@ public class Server {
 						&& angleC == 90 && angleD == 90) {
 					this.addProperty(QuadProperty.SQUARE);
 				}
-				if (a == c && b == d && angleA == 90 & angleB == 90 && angleA == 90
-						&& 90 == angleB && angleC == 90 && angleD == 90) {
+				if (a == c && b == d && angleA == 90 & angleB == 90
+						&& angleA == 90 && 90 == angleB && angleC == 90
+						&& angleD == 90) {
 					this.addProperty(QuadProperty.RECTANGLE);
 				}
 				if (a == c && b == d && angleA == angleC & angleB == angleD) {
@@ -958,7 +985,6 @@ public class Server {
 					this.addProperty(QuadProperty.TRAPEZOID);
 				}
 			}
-
 
 		}
 
@@ -992,6 +1018,7 @@ public class Server {
 		}
 
 	}
+
 	public static abstract class Shape {
 
 		// A list of vertices mapped in memory
@@ -999,7 +1026,8 @@ public class Server {
 
 		public Shape(List<Point> vertices) {
 
-			// We should sort out list of points before actually doing anything with
+			// We should sort out list of points before actually doing anything
+			// with
 			// them
 			// List<Point> sorted = getSortedClockwiseVertices(vertices);
 			_vertices = vertices;
@@ -1012,8 +1040,8 @@ public class Server {
 		}
 
 		/**
-		 * Performs an equality test on the internal points stored to check if this
-		 * shape shares the same points as those stored in the list.
+		 * Performs an equality test on the internal points stored to check if
+		 * this shape shares the same points as those stored in the list.
 		 * 
 		 * @param points
 		 *            The points to check against
@@ -1022,7 +1050,6 @@ public class Server {
 		public boolean hasPoints(List<Point> points) {
 			return this._vertices.containsAll(points);
 		}
-
 
 		public String toString() {
 			String stuff = "";
@@ -1079,8 +1106,10 @@ public class Server {
 		}
 
 	}
+
 	/**
 	 * A triangle shape with 3 points
+	 * 
 	 * @author Vaughan Hilts
 	 *
 	 */
@@ -1126,8 +1155,8 @@ public class Server {
 			double angleB = 0;
 			double angleC = 0;
 
-			angleC = Math.acos((Math.pow(c, 2) - Math.pow(a, 2) - Math.pow(b, 2))
-					/ (-2 * a * b));
+			angleC = Math.acos((Math.pow(c, 2) - Math.pow(a, 2) - Math
+					.pow(b, 2)) / (-2 * a * b));
 			double cRatio = c / Math.sin(angleC);
 
 			angleB = Math.asin(b / cRatio);
@@ -1179,7 +1208,8 @@ public class Server {
 					&& intA == intB && intB == intC && intC == intA) {
 				this.addProperty(TriangleProperty.EQUILATERAL);
 			} else {
-				this.addProperty(TriangleProperty.ISOSCELES); // otherwise, isoceles
+				this.addProperty(TriangleProperty.ISOSCELES); // otherwise,
+																// isoceles
 			}
 
 		}
@@ -1206,6 +1236,4 @@ public class Server {
 
 	}
 
-	
-	
 }

@@ -46,27 +46,28 @@ public class Client {
 	static DataInputStream is = null;
 
 	final String ENDLINE = "\r\n";
-//(initilized the text fields and areas were going to need
+	// (initilized the text fields and areas were going to need
 	final JTextArea getText = new JTextArea(1, 20);
 	final JTextField ipText = new JTextField(20);
 	final JTextField portText = new JTextField(7);
 	final JTextArea shapeText = new JTextArea(1, 20);
 
 	@SuppressWarnings("rawtypes")
-//Make our GUI list for displaying the retreived values
+	// Make our GUI list for displaying the retreived values
 	private final JList displayList;
-	//Make a list to store what will go in the GUI list
+	// Make a list to store what will go in the GUI list
 	private final ArrayList<Shape> _shapes = new ArrayList<Shape>();
-	//Make an text for information on clicked list elements 
+	// Make an text for information on clicked list elements
 	private final JTextArea _infoArea = new JTextArea();
-//Set up the 4 buttons we need
+	// Set up the 4 buttons we need
 	JButton connect = new JButton("Connect");
 	JButton disconnect = new JButton("Disconnect");
 	JButton getBut = new JButton("GET");
 	JButton postBut = new JButton("POST");
-//Spawn two threads dont think these were needed
-//	Thread send = new sendThread();
-	//Thread get = new getThread();
+
+	// Spawn two threads dont think these were needed
+	// Thread send = new sendThread();
+	// Thread get = new getThread();
 
 	public static void main(String[] args) {
 		new Client();
@@ -79,7 +80,7 @@ public class Client {
 		JScrollPane listScrollPane = new JScrollPane(displayList,
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		//make the main frame for the program
+		// make the main frame for the program
 		JFrame guiFrame = new JFrame();
 		// make sure the program exits when the frame closes
 		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,18 +92,19 @@ public class Client {
 				JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		getText.setLineWrap(false);
-		//These scroll panes are to get the textares to scroll accross with you.
-		//bars are turned off as they get in the way
+		// These scroll panes are to get the textares to scroll accross with
+		// you.
+		// bars are turned off as they get in the way
 		JScrollPane shapeScrollPane = new JScrollPane(shapeText,
 				JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		shapeText.setLineWrap(false);
-		//just some lables for the port and host names
+		// just some lables for the port and host names
 		JLabel ipLbl = new JLabel("Host:");
 		JLabel portLbl = new JLabel("Port:");
-		//set up the frame
+		// set up the frame
 		guiFrame.setLayout(new GridLayout(0, 1));
-		//start making panels and filling them for formatting
+		// start making panels and filling them for formatting
 		final JPanel ipPanel = new JPanel();
 		ipPanel.add(ipLbl);
 		ipPanel.add(ipText);
@@ -119,15 +121,15 @@ public class Client {
 
 		getPanel.add(getBut);
 		getPanel.add(getScrollPane);
-		//start filling up the gui
+		// start filling up the gui
 		guiFrame.add(buttonPanel);
 		guiFrame.add(getPanel);
 		final JPanel userInputPanel = new JPanel();
 		userInputPanel.add(postBut);
 		userInputPanel.add(shapeScrollPane);
-		//add a panel
+		// add a panel
 		guiFrame.add(userInputPanel);
-		//format the info area
+		// format the info area
 		this._infoArea.setText("Please select a shape.");
 		this._infoArea.setEditable(false);
 		this._infoArea.setColumns(5);
@@ -135,19 +137,19 @@ public class Client {
 		this._infoArea.setForeground(Color.WHITE);
 		this._infoArea.setFont(new Font("monospaced", Font.PLAIN, 12));
 		this._infoArea.setLineWrap(true);
-		//put it in the gui
+		// put it in the gui
 		guiFrame.add(this._infoArea);
 
-		//put in the last piece of the gui
+		// put in the last piece of the gui
 		guiFrame.add(listScrollPane);
-		//show the gui to the user
+		// show the gui to the user
 		guiFrame.setVisible(true);
 
 		// for saving some time
 		ipText.setText("localhost");
-		//portText.setText("5555");
-		//and now the listeners
-		
+		// portText.setText("5555");
+		// and now the listeners
+
 		this.displayList.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -176,7 +178,7 @@ public class Client {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 
-				try {//error handling is also done within the function
+				try {// error handling is also done within the function
 					closeConnection();
 				} catch (Exception e) {
 					displayError("The connection could not be closed");
@@ -188,7 +190,7 @@ public class Client {
 		getBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				//this is for error handling
+				// this is for error handling
 				if (os != null) {
 					// if(!os.checkError()){
 					Thread get = new getThread();
@@ -207,7 +209,7 @@ public class Client {
 		postBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				//this is for error handling
+				// this is for error handling
 				if (os != null) {
 					// if(!os.checkError()){
 					Thread send = new sendThread();
@@ -261,10 +263,9 @@ public class Client {
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	
-	
 	/**
-	 * Opens a connection to the server using the input values provided by the form.
+	 * Opens a connection to the server using the input values provided by the
+	 * form.
 	 * 
 	 * @param ipText2
 	 * @param portText2
@@ -329,9 +330,12 @@ public class Client {
 				response = is.readUTF();
 
 				if (response.indexOf("200") > -1) {
-					String type = response.substring(response.indexOf("Type:") + "Type:".length());
-					type = type.trim().equals("Q") ? "Quadrilateral" : "Triangle";	
-					displayInfo("POST was  a success. Server database updated. \n Shape Type: " + type);
+					String type = response.substring(response.indexOf("Type:")
+							+ "Type:".length());
+					type = type.trim().equals("Q") ? "Quadrilateral"
+							: "Triangle";
+					displayInfo("POST was  a success. Server database updated. \n Shape Type: "
+							+ type);
 				} else {
 					this.doBadRequest(response);
 				}
@@ -445,6 +449,7 @@ public class Client {
 			});
 		}
 	}
+
 	/**
 	 * A basic 2D point that allows the representation of a single vertex in 2D
 	 * space. Contains simple methods to get the cordinates. This object is
@@ -480,6 +485,7 @@ public class Client {
 		}
 
 	}
+
 	public class Shape {
 
 		String _properties = "";
@@ -493,7 +499,7 @@ public class Client {
 
 			String[] pointPieces = sequences[0].split(",");
 			if (pointPieces.length > 1) {
-				
+
 				// Convert pieces here
 				for (int i = 0; i < pointPieces.length; i += 2) {
 

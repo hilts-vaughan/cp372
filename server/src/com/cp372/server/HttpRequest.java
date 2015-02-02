@@ -147,7 +147,7 @@ final class HttpRequest implements Runnable {
 				aux = tokenizer.nextToken().toUpperCase();
 			} else {
 				throw new BadRequestException(
-						"The shape qualifier is missing from the request");
+						"The shape qualifier or post data is missing from the request");
 			}
 
 	

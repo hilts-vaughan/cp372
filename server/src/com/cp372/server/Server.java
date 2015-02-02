@@ -190,7 +190,8 @@ public final class Server {
 		s = ShapeFactory.createShape(points);
 		s.printPoints();
 		ShapeStorage.getInstance().insertOrUpdateShape(s);
-		
+		ShapeStorage.getInstance().insertOrUpdateShape(s);
+
 		
 		// Process HTTP service requests in an infinite loop.
 		while (true) {

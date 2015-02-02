@@ -1,6 +1,7 @@
 package com.cp372.server.filters;
 
 import com.cp372.server.ShapeEntry;
+import com.cp372.server.exceptions.BadRequestException;
 
 /**
  * Provides a generic interface for filters that must be implemented against
@@ -21,7 +22,8 @@ public interface ShapeFilter {
 	 *            A data object decided by the implemented class that is used as
 	 *            context for the filtering.
 	 * @return
+	 * @throws BadRequestException 
 	 */
-	public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes, Object context);
+	public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes, Object context) throws BadRequestException;
 
 }

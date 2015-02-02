@@ -255,14 +255,14 @@ public class ShapeGetter {
 					doBadRequest(response);
 				} else if (response.indexOf("200") > -1) {
 					doGET(response);
-				}
-				else {
+				} else {
 					doOther(response);
 				}
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Well");
+				
+				// Clean up if we're forced to
+				
 				shapeConnectionSocket = null;
 				is = null;
 				os = null;
@@ -274,12 +274,14 @@ public class ShapeGetter {
 		private void doOther(String response) {
 			displayError("The server return an unknown response. Is your client up to date?");
 		}
+
 		private void doBadRequest(String response) {
 			final String searchFor = "Reason:";
-			
+
 			int index = response.indexOf(searchFor);
-			String reason = response.substring(index + searchFor.length() + 1).trim();
-			
+			String reason = response.substring(index + searchFor.length() + 1)
+					.trim();
+
 			displayError("Bad Request: " + reason);
 		}
 

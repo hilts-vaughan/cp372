@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cp372.server.ShapeEntry;
+import com.cp372.server.exceptions.BadRequestException;
 import com.cp372.server.models.Quadrilateral;
 import com.cp372.server.models.Triangle;
 
@@ -17,10 +18,11 @@ public class PolygonFilter implements ShapeFilter {
 
 	private final static String SHAPE_TYPE_TRIANGLE = "T";
 	private final static String SHAPE_TYPE_QUAD = "Q";
+	private final static String SHAPE_TYPE_BOTH = "B";
 
 	@Override
 	public Iterable<ShapeEntry> filter(Iterable<ShapeEntry> shapes,
-			Object context) {
+			Object context) throws BadRequestException {
 
 		String type = (String) context;
 		System.out.println(type);
@@ -36,8 +38,10 @@ public class PolygonFilter implements ShapeFilter {
 				if (entry.getShape() instanceof Quadrilateral)
 					results.add(entry);
 				break;
-			default: // otherwise, it's both so allow that
+			case SHAPE_TYPE_BOTH: // otherwise, it's both so allow that
 				results.add(entry);
+			default:
+				throw new BadRequestException("The provided shape qualifier is illegal");
 			}
 		}
 

@@ -26,6 +26,8 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
+
 import java.util.concurrent.Semaphore;
 
 /**
@@ -445,5 +447,105 @@ public class ShapeGetter {
 			});
 		}
 	}
+	/**
+	 * A basic 2D point that allows the representation of a single vertex in 2D
+	 * space. Contains simple methods to get the cordinates. This object is
+	 * immutable.
+	 * 
+	 * @author Vaughan Hilts, Brandon Smith
+	 * 
+	 */
+	public class Point {
 
+		private final int x;
+		private final int y;
+
+		public Point(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		public int getX() {
+			return x;
+		}
+
+		public int getY() {
+			return y;
+		}
+
+		/**
+		 * Returns a string representation of the point for easy viewing.
+		 */
+		@Override
+		public String toString() {
+			return ("(" + x + "," + y + ")");
+		}
+
+	}
+	public class Shape {
+
+		String _properties = "";
+		private List<Point> _vertices = new ArrayList<Point>();
+		int _count;
+
+		// Unpack our string and extract our data string
+		public Shape(String packedShapeString) {
+
+			String[] sequences = packedShapeString.split(":");
+
+			String[] pointPieces = sequences[0].split(",");
+			if (pointPieces.length > 1) {
+				
+				// Convert pieces here
+				for (int i = 0; i < pointPieces.length; i += 2) {
+
+					String pointPiece = pointPieces[i].trim();
+					String pointPiece2 = pointPieces[i + 1].trim();
+
+					int x = Integer.parseInt(pointPiece.trim());
+					int y = Integer.parseInt(pointPiece2.trim());
+
+					_vertices.add(new Point(x, y));
+				}
+
+				this._properties = sequences[1];
+				this._count = Integer.parseInt(sequences[2].replace("\r", "")
+						.replace("\n", ""));
+			}
+
+		}
+
+		public String toString() {
+
+			String value = "No Values";
+			if (getType() != null) {
+				value = getType() + " with points " + this._vertices.toString()
+						+ "";
+				;
+			}
+			return value;
+		}
+
+		private String getType() {
+			int vertexCount = this._vertices.size();
+			String name = vertexCount == 3 ? "Triangle" : "Quadrilateral";
+			if (vertexCount == 0) {
+				name = null;
+			}
+			return name;
+		}
+
+		public String getInfo() {
+			String info = "Sorry, there is no information available.";
+
+			if (getType() != null) {
+				info = "Type: " + getType() + "\n";
+				info += "Occurences: " + _count + "\n";
+				info += "Properties: " + _properties + "\n";
+				info += "Points: " + _vertices;
+			}
+			return info;
+		}
+
+	}
 }

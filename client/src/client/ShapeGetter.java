@@ -9,6 +9,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Semaphore;
+
 
 public class ShapeGetter {
 	// Note: Typically the main method will be in a
@@ -72,6 +74,7 @@ public class ShapeGetter {
 
 		this.displayList = new JList<Shape>();
 		// this._shapes.
+		JScrollPane listScrollPane = new JScrollPane(displayList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 		JFrame guiFrame = new JFrame();
 		// make sure the program exits when the frame closes
@@ -133,7 +136,7 @@ public class ShapeGetter {
 			}
 		});
 
-		guiFrame.add(displayList);
+		guiFrame.add(listScrollPane);
 		guiFrame.setVisible(true);
 
 		// for saving some time

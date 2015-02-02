@@ -28,6 +28,13 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
+/**
+ * This is the basic Java GUI interface for the QATTP sample client. Most of the
+ * GUI logic is held within here.
+ * 
+ * @author Vaughan Hilts, Brandon Smith
+ *
+ */
 public class ShapeGetter {
 	// Note: Typically the main method will be in a
 	// separate class. As this is a simple one class
@@ -207,6 +214,13 @@ public class ShapeGetter {
 
 	}
 
+	/**
+	 * Given a shape, the information area is updated to reflect the information
+	 * of the shape.
+	 * 
+	 * @param shape
+	 *            The shape information to update the info area with.
+	 */
 	void updateInformation(Shape shape) {
 		if (shape == null) {
 			this._infoArea.setText("");
@@ -215,16 +229,39 @@ public class ShapeGetter {
 		}
 	}
 
+	/**
+	 * Given a reason, informs the user of an error that has occurred.
+	 * 
+	 * @param reason
+	 *            The reason for the error.
+	 */
 	private void displayError(String reason) {
 		JOptionPane.showMessageDialog(null, reason, "Error",
 				JOptionPane.ERROR_MESSAGE);
 	}
 
+	/**
+	 * Given a message, informs the user of some information.
+	 * 
+	 * @param message
+	 *            The message to inform the user of.
+	 */
 	private void displayInfo(String message) {
 		JOptionPane.showMessageDialog(null, message, "Information",
 				JOptionPane.INFORMATION_MESSAGE);
 	}
 
+	
+	
+	/**
+	 * Opens a connection to the server using the input values provided by the form.
+	 * 
+	 * @param ipText2
+	 * @param portText2
+	 * @throws NumberFormatException
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	void openConnection(JTextField ipText2, JTextField portText2)
 			throws NumberFormatException, UnknownHostException, IOException {
 		if (shapeConnectionSocket == null) {
@@ -237,6 +274,13 @@ public class ShapeGetter {
 		}
 	}
 
+	/**
+	 * Forcibly terminates a connection provided by the server.
+	 * 
+	 * @throws NumberFormatException
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	void closeConnection() throws NumberFormatException, UnknownHostException,
 			IOException {
 		if (shapeConnectionSocket != null) {
@@ -253,6 +297,12 @@ public class ShapeGetter {
 
 	}
 
+	/**
+	 * A thread designed to be used to send data in a non-blocking fashion.
+	 * 
+	 * @author Vaughan Hilts, Brandon Smith
+	 *
+	 */
 	public class sendThread extends Thread {
 
 		public void run() {
@@ -298,6 +348,12 @@ public class ShapeGetter {
 
 	}
 
+	/**
+	 * A thread designed to get data in a non-blocking fashion.
+	 * 
+	 * @author Vaughan Hilts, Brandon Smith
+	 *
+	 */
 	public class getThread extends Thread {
 
 		public void run() {

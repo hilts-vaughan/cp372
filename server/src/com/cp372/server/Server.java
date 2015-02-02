@@ -9,16 +9,36 @@ import com.cp372.server.models.Point;
 import com.cp372.server.models.Shape;
 
 public final class Server {
+	@SuppressWarnings("resource")
 	public static void main(String argv[]) throws Exception {
 		// Get the port number from the command line.
-		int port = 5555;// new Integer(argv[0]).intValue();
+
+		int port = 0;
+		
+		try {
+			port = Integer.parseInt(argv[0]);
+		} 
+		
+		catch(Exception exception) {
+			System.out.println("Invalid usage. Proper usage is: server <portNumber>");
+			return;
+		}
+		
 		// System.out.println(sss.charAt(0));
 		// Establish the listen socket.
 		System.out.println("Preparing to launch the web server...");
 
-		@SuppressWarnings("resource")
-		ServerSocket socket = new ServerSocket(port);
-
+		ServerSocket socket;
+		
+		try {
+			socket = new ServerSocket(port);
+		}
+		catch(Exception exception) {
+			System.out.println("Server failed to bind on port " + port + ". Is it in use?");
+			exception.printStackTrace();
+			return;
+		}
+		
 		System.out.println("Socket is now bound at localhost:" + port);
 
 		// Try 4 points

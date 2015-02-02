@@ -5,7 +5,7 @@ package client;
  * space. Contains simple methods to get the cordinates. This object is
  * immutable.
  * 
- * @author Vaughan Hilts & Brandon Smith
+ * @author Vaughan Hilts, Brandon Smith
  * 
  */
 public class Point {
@@ -26,6 +26,9 @@ public class Point {
 		return y;
 	}
 
+	/**
+	 * Returns a string representation of the point for easy viewing.
+	 */
 	@Override
 	public String toString() {
 		return ("(" + x + "," + y + ")");

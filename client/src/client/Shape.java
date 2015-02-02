@@ -3,6 +3,13 @@ package client;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A basic shape representation that client uses to keep track
+ * of the various data the server has sent down.
+ * 
+ * @author Vaughan Hilts, Brandon Smith
+ *
+ */
 public class Shape {
 
 	String _properties = "";
@@ -16,6 +23,7 @@ public class Shape {
 
 		String[] pointPieces = sequences[0].split(",");
 		if (pointPieces.length > 1) {
+			
 			// Convert pieces here
 			for (int i = 0; i < pointPieces.length; i += 2) {
 
@@ -37,7 +45,7 @@ public class Shape {
 
 	public String toString() {
 
-		String value = "no values";
+		String value = "No Values";
 		if (getType() != null) {
 			value = getType() + " with points " + this._vertices.toString()
 					+ "";
@@ -56,7 +64,7 @@ public class Shape {
 	}
 
 	public String getInfo() {
-		String info = "Sorry there are no points of that type";
+		String info = "Sorry, there is no information available.";
 
 		if (getType() != null) {
 			info = "Type: " + getType() + "\n";

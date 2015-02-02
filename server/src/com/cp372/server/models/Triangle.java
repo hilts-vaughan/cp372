@@ -106,8 +106,6 @@ public class Triangle extends Shape {
 			this.addProperty(TriangleProperty.ISOSCELES); // otherwise, isoceles
 		}
 
-		System.out.println(this._properties.toString());
-
 	}
 
 	public Triangle(List<Point> vertices) {

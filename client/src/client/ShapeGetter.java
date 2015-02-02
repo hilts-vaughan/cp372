@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import java.awt.BorderLayout;
@@ -25,6 +27,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 public class ShapeGetter {
@@ -43,7 +46,10 @@ public class ShapeGetter {
 	final JTextField ipText = new JTextField(20);
 	final JTextField portText = new JTextField(4);
 	final JTextField shapeText = new JTextField(20);
-	final JList<String> displayList = new JList();
+	
+	private final JList displayList;
+	private final ArrayList<Shape> _shapes = new ArrayList<Shape>();
+	
 	JButton connect = new JButton("Connect");
 	JButton getBut = new JButton("Get");
 	JButton sendBut = new JButton("Send");
@@ -56,11 +62,14 @@ public class ShapeGetter {
 
 	public ShapeGetter() {
 
+		this.displayList = new JList<Shape>();
+		// this._shapes.
+
 		JFrame guiFrame = new JFrame();
 		// make sure the program exits when the frame closes
 		guiFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		guiFrame.setTitle("ShapeGetter");
-		guiFrame.setSize(300, 500);
+		guiFrame.setSize(300, 700);
 
 		JPanel grid = new JPanel(new FlowLayout());
 
@@ -207,25 +216,30 @@ public class ShapeGetter {
 			os.print("GET " + getText.getText() + ENDLINE);
 			String response = null;
 			try {
-				
-				response = is.readLine();
-				System.out.println(response);
-				String[] parts = response.split("&");
-				if (parts.length > 0 && parts[0].contains("200 ok")) {
-					parts[0] = (String) parts[0].subSequence(7,
-							parts[0].length());
-					// ArrayList<Object> shapesArray = new ArrayList<Object>();
-					// for(int i=0; i<parts.length; i++){
-					// shapesArray.add(parts[i]);
-					// }
-					// shapesArray.add("ok");
 
-					// displayList.setListData((String[])
-					// shapesArray.toArray());
-					parts[0] = "WORK";
-					String[] because = { "hello", "do", "you", "work" };
-					displayList.setListData(because);
+				response = is.readUTF();
+				System.out.println(response);
+
+				// Seek ahead to the data
+				response = response.substring(response.indexOf("OK") + 2);
+
+				// Extract out the various different parts
+				String[] parts = response.split("&");
+
+				_shapes.clear();
+				for (String part : parts) {
+					Shape shape = new Shape(part);
+					_shapes.add(shape);
 				}
+
+				// We need to delegate or we'll be in trouble with cross thread violations
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {					
+						displayList.setListData(_shapes.toArray());
+					}
+				});
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				System.out.println("Well");
